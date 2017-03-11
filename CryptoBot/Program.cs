@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoBot.TickerServices;
 
 namespace CryptoBot
 {
@@ -6,7 +7,8 @@ namespace CryptoBot
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+			var service = new PoloniexTickerService();
+			service.Start();
         }
     }
 }
