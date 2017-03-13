@@ -1,0 +1,34 @@
+﻿using System;
+
+namespace CryptoBot.Utils.Preconditions
+{
+    /// <summary>
+    /// Preconditions helper class
+    /// </summary>
+    public static class Preconditions
+    {
+        /// <summary>
+        /// Check object not null or throw ar
+        /// </summary>
+        public static T CheckNotNull<T>(T obj)
+        {
+            if (obj == null)
+            {
+                throw new NullReferenceException();
+            }
+
+            return obj;
+        }
+
+        /// <summary>
+        /// Check argument or throw argument exception
+        /// </summary>
+        public static void CheckArgument(bool condition)
+        {
+            if (!condition)
+            {
+                throw new ArgumentException();
+            }
+        }
+    }
+}
