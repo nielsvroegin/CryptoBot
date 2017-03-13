@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using CryptoBot.TickerServices.Data;
+using CryptoBot.Utils.Logging;
 using CryptoBot.Utils.Preconditions;
 using CryptoBot.Utils.ServiceHandler;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using WampSharp.Binding;
 using WampSharp.Core.Listener;
@@ -18,6 +20,8 @@ namespace CryptoBot.TickerServices.Services.Poloniex
     /// </summary>
     public sealed class PoloniexTickerService : IManagedService, ITickerService
     {
+        private static readonly ILogger Logger = ApplicationLogging.CreateLogger<PoloniexTickerService>();
+
         private const string ServerAddress = "wss://api.poloniex.com";
         private const string TickerTopic = "ticker";
 
@@ -54,6 +58,8 @@ namespace CryptoBot.TickerServices.Services.Poloniex
 
             // Subscribe to ticker topic
             _subscription = _channel.RealmProxy.Services.GetSubject(TickerTopic).Subscribe(x => ProcessTick(x.Arguments));
+
+            Logger.LogInformation("Poloniex ticker service has been started");
         }
 
         /// <inheritdoc />
@@ -62,6 +68,8 @@ namespace CryptoBot.TickerServices.Services.Poloniex
             // Stop subscription and close channel
             _subscription.Dispose();
             _channel.Close();
+
+            Logger.LogInformation("Poloniex ticker service has been stopped");
         }
 
         /// <inheritdoc />
@@ -98,10 +106,11 @@ namespace CryptoBot.TickerServices.Services.Poloniex
         private void ProcessTick(ISerializedValue[] arguments)
         {
             // Determine applicable currency pair
-            var currencyPair = CurrencyPair.Parse(arguments[0].Deserialize<string>());
+            var currencyPairStr = arguments[0].Deserialize<string>();
+            var currencyPair = CurrencyPair.Parse(currencyPairStr);
             if (ReferenceEquals(currencyPair, null))
             {
-                // TODO: Log warning
+                Logger.LogTrace("Received tick of unknown currency Pair '{0}', skipping tick", currencyPairStr);
                 return;
             }
 
@@ -116,6 +125,8 @@ namespace CryptoBot.TickerServices.Services.Poloniex
                 .DayHigh(arguments[8].Deserialize<double>())
                 .DayLow(arguments[9].Deserialize<double>())
                 .Build();
+
+            Logger.LogTrace("Received new tick: {0}", tickData);
 
             // Notify subscribers
             foreach (var subscriber in _subscribers)

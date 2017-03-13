@@ -29,6 +29,12 @@ namespace CryptoBot.TickerServices.Data
             QuoteCurrency = Preconditions.CheckNotNull(quoteCurrency);
         }
 
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return $"{nameof(BaseCurrency)}: {BaseCurrency}, {nameof(QuoteCurrency)}: {QuoteCurrency}";
+        }
+
         /// <summary>
         /// Parse a string as a currency pair. Pair is expected to be in format BASE_QUOTE (ie BTC_ETH)
         /// </summary>

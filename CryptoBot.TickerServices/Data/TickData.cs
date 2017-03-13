@@ -164,5 +164,11 @@ namespace CryptoBot.TickerServices.Data
         {
             // Create object using builder
         }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return $"{nameof(CurrencyPair)}: {CurrencyPair}, {nameof(Last)}: {Last}, {nameof(LowestAsk)}: {LowestAsk}, {nameof(HighestBid)}: {HighestBid}, {nameof(PercentChange)}: {PercentChange}, {nameof(BaseVolume)}: {BaseVolume}, {nameof(QuoteVolume)}: {QuoteVolume}, {nameof(IsFrozen)}: {IsFrozen}, {nameof(DayHigh)}: {DayHigh}, {nameof(DayLow)}: {DayLow}";
+        }
     }
 }
