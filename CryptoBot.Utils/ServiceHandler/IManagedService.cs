@@ -5,16 +5,16 @@ namespace CryptoBot.Utils.ServiceHandler
     /// <summary>
     /// Interface definition for startable/stopable services
     /// </summary>
-	public interface IManagedService
-	{
+    public interface IManagedService
+    {
         /// <summary>
         /// Start service
         /// </summary>
-		void Start();
+        void Start();
 
         /// <summary>
         /// Stop service
         /// </summary>
-		void Stop();
-	}
+        void Stop();
+    }
 }

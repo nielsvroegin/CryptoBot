@@ -7,8 +7,8 @@ namespace CryptoBot
     {
         private static void Main(string[] args)
         {
-			var service = new PoloniexTickerService();
-			service.Start();
+            var service = new PoloniexTickerService();
+            service.Start();
 
             Console.ReadLine();
         }

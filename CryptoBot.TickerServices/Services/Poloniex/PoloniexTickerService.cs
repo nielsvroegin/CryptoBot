@@ -16,16 +16,16 @@ namespace CryptoBot.TickerServices.Services.Poloniex
     /// <summary>
     /// Ticker service implementation for Poloniex exchange
     /// </summary>
-	public sealed class PoloniexTickerService : IManagedService, ITickerService
-	{
+    public sealed class PoloniexTickerService : IManagedService, ITickerService
+    {
         private const string ServerAddress = "wss://api.poloniex.com";
         private const string TickerTopic = "ticker";
 
         private readonly IList<ITickerSubscriber> _subscribers;
-	    private readonly IWampChannelFactory _wampChannelFactory;
+        private readonly IWampChannelFactory _wampChannelFactory;
 
         private IDisposable _subscription;
-	    private IWampChannel _channel;
+        private IWampChannel _channel;
 
         /// <summary>
         /// Constructor
@@ -35,16 +35,16 @@ namespace CryptoBot.TickerServices.Services.Poloniex
         /// <summary>
         /// Constructor
         /// </summary>
-	    public PoloniexTickerService(IWampChannelFactory wampChannelFactory)
-	    {
+        public PoloniexTickerService(IWampChannelFactory wampChannelFactory)
+        {
             // Set fields
-	        _wampChannelFactory = Preconditions.CheckNotNull(wampChannelFactory);
+            _wampChannelFactory = Preconditions.CheckNotNull(wampChannelFactory);
             _subscribers = new List<ITickerSubscriber>();
         }
 
         /// <inheritdoc />
-	    public void Start()
-		{
+        public void Start()
+        {
             // Open channel to poloniex
             var mJsonBinding = new JTokenJsonBinding();
             Func<IControlledWampConnection<JToken>> connectionFactory = () => new ControlledTextWebSocketConnection<JToken>(new Uri(ServerAddress), mJsonBinding);
@@ -57,45 +57,45 @@ namespace CryptoBot.TickerServices.Services.Poloniex
         }
 
         /// <inheritdoc />
-	    public void Stop()
-		{
+        public void Stop()
+        {
             // Stop subscription and close channel
-			_subscription.Dispose();
+            _subscription.Dispose();
             _channel.Close();
-		}
+        }
 
         /// <inheritdoc />
-		public void Subscribe(ITickerSubscriber subscriber)
-		{
+        public void Subscribe(ITickerSubscriber subscriber)
+        {
             Preconditions.CheckNotNull(subscriber);
 
             // Subscribe subscriber
             _subscribers.Add(subscriber);
-		}
+        }
 
         /// <inheritdoc />
-		public void Unsubscribe(ITickerSubscriber subscriber)
-		{
+        public void Unsubscribe(ITickerSubscriber subscriber)
+        {
             Preconditions.CheckNotNull(subscriber);
 
             // Unsubscribe subscriber
             _subscribers.Remove(subscriber);
-		}
+        }
 
-	    private void OnConnectionBroken(object sender, WampSessionCloseEventArgs e)
-	    {
+        private void OnConnectionBroken(object sender, WampSessionCloseEventArgs e)
+        {
             // Allow disconnecton, but re-initialize connection in case of any other reason
             if (e.CloseType == SessionCloseType.Disconnection)
-	        {
-	            return;
-	        }
+            {
+                return;
+            }
 
             // Re-initialize connection
             Stop();
             Start();
-	    }
+        }
 
-	    private void ProcessTick(ISerializedValue[] arguments)
+        private void ProcessTick(ISerializedValue[] arguments)
         {
             // Determine applicable currency pair
             var currencyPair = CurrencyPair.Parse(arguments[0].Deserialize<string>());

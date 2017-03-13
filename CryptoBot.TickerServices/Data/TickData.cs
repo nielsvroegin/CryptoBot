@@ -6,17 +6,17 @@ namespace CryptoBot.TickerServices.Data
     /// <summary>
     /// Tick data object
     /// </summary>
-	public sealed class TickData
-	{
+    public sealed class TickData
+    {
         /// <summary>
         /// Applicable currency pair for tick
         /// </summary>
-	    public CurrencyPair CurrencyPair { get; private set; }
+        public CurrencyPair CurrencyPair { get; private set; }
 
         /// <summary>
         /// Last price
         /// </summary>
-	    public double Last { get; private set; }
+        public double Last { get; private set; }
 
         /// <summary>
         /// Lowest ask price
@@ -61,18 +61,18 @@ namespace CryptoBot.TickerServices.Data
         /// <summary>
         /// Builder for TickData
         /// </summary>
-	    public sealed class Builder
-	    {
-	        private TickData _tickData = new TickData();
+        public sealed class Builder
+        {
+            private TickData _tickData = new TickData();
 
             /// <summary>
             /// Constructor
             /// </summary>
             /// <param name="currencyPair">Applicable currency pair for tick</param>
             /// <param name="last">Last price</param>
-	        public Builder(CurrencyPair currencyPair, Double last)
-	        {
-	            _tickData.CurrencyPair = Preconditions.CheckNotNull(currencyPair);
+            public Builder(CurrencyPair currencyPair, Double last)
+            {
+                _tickData.CurrencyPair = Preconditions.CheckNotNull(currencyPair);
                 _tickData.Last = Preconditions.CheckNotNull(last);
             }
 
@@ -160,9 +160,9 @@ namespace CryptoBot.TickerServices.Data
             }
         }
 
-	    private TickData()
-	    {
-	        // Create object using builder
-	    }
+        private TickData()
+        {
+            // Create object using builder
+        }
     }
 }
