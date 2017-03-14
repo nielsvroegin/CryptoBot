@@ -1,4 +1,5 @@
 ﻿using CryptoBot.TickerServices.Data;
+using CryptoBot.Utils.Enums;
 
 namespace CryptoBot.TickerServices
 {
@@ -11,6 +12,7 @@ namespace CryptoBot.TickerServices
         /// Receiver method for new TickData
         /// </summary>
         /// <param name="tickData">The TickData</param>
-        void OnTick(TickData tickData);
+        /// <param name="exchange">Exchange that deliver this tick</param>
+        void OnTick(Exchange exchange, TickData tickData);
     }
 }

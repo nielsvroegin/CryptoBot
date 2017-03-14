@@ -59,6 +59,20 @@ namespace CryptoBot.TickerServices.Data
         public double DayLow { get; private set; }
 
         /// <summary>
+        /// Constructor
+        /// </summary>
+        private TickData()
+        {
+            // Create object using builder
+        }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return $"{nameof(CurrencyPair)}: {CurrencyPair}, {nameof(Last)}: {Last}, {nameof(LowestAsk)}: {LowestAsk}, {nameof(HighestBid)}: {HighestBid}, {nameof(PercentChange)}: {PercentChange}, {nameof(BaseVolume)}: {BaseVolume}, {nameof(QuoteVolume)}: {QuoteVolume}, {nameof(IsFrozen)}: {IsFrozen}, {nameof(DayHigh)}: {DayHigh}, {nameof(DayLow)}: {DayLow}";
+        }
+
+        /// <summary>
         /// Builder for TickData
         /// </summary>
         public sealed class Builder
@@ -158,17 +172,6 @@ namespace CryptoBot.TickerServices.Data
                 _tickData = null;
                 return ret;
             }
-        }
-
-        private TickData()
-        {
-            // Create object using builder
-        }
-
-        /// <inheritdoc />
-        public override string ToString()
-        {
-            return $"{nameof(CurrencyPair)}: {CurrencyPair}, {nameof(Last)}: {Last}, {nameof(LowestAsk)}: {LowestAsk}, {nameof(HighestBid)}: {HighestBid}, {nameof(PercentChange)}: {PercentChange}, {nameof(BaseVolume)}: {BaseVolume}, {nameof(QuoteVolume)}: {QuoteVolume}, {nameof(IsFrozen)}: {IsFrozen}, {nameof(DayHigh)}: {DayHigh}, {nameof(DayLow)}: {DayLow}";
         }
     }
 }

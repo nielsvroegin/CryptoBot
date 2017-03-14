@@ -1,10 +1,17 @@
-﻿namespace CryptoBot.TickerServices
+﻿using CryptoBot.Utils.Enums;
+
+namespace CryptoBot.TickerServices
 {
     /// <summary>
     /// Interface definition for TickerServices
     /// </summary>
     public interface ITickerService
     {
+        /// <summary>
+        /// Get Identifier of Tickerservice
+        /// </summary>
+        Exchange Exchange { get; }
+
         /// <summary>
         /// Subscribe on service for ticker updates
         /// </summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CryptoBot.TickerServices.Data;
+using CryptoBot.Utils.Enums;
 using CryptoBot.Utils.Logging;
 using CryptoBot.Utils.Preconditions;
 using CryptoBot.Utils.ServiceHandler;
@@ -21,15 +22,19 @@ namespace CryptoBot.TickerServices.Services.Poloniex
     public sealed class PoloniexTickerService : IManagedService, ITickerService
     {
         private static readonly ILogger Logger = ApplicationLogging.CreateLogger<PoloniexTickerService>();
-
         private const string ServerAddress = "wss://api.poloniex.com";
         private const string TickerTopic = "ticker";
 
-        private readonly IList<ITickerSubscriber> _subscribers;
+        private readonly IList<ITickerSubscriber> _subscribers = new List<ITickerSubscriber>();
         private readonly IWampChannelFactory _wampChannelFactory;
 
         private IDisposable _subscription;
         private IWampChannel _channel;
+
+        /// <summary>
+        /// Corresponding exchange for Ticker service
+        /// </summary>
+        public Exchange Exchange => Exchange.Poloniex;
 
         /// <summary>
         /// Constructor
@@ -41,9 +46,7 @@ namespace CryptoBot.TickerServices.Services.Poloniex
         /// </summary>
         public PoloniexTickerService(IWampChannelFactory wampChannelFactory)
         {
-            // Set fields
             _wampChannelFactory = Preconditions.CheckNotNull(wampChannelFactory);
-            _subscribers = new List<ITickerSubscriber>();
         }
 
         /// <inheritdoc />
@@ -78,7 +81,10 @@ namespace CryptoBot.TickerServices.Services.Poloniex
             Preconditions.CheckNotNull(subscriber);
 
             // Subscribe subscriber
-            _subscribers.Add(subscriber);
+            lock (_subscribers)
+            {
+                _subscribers.Add(subscriber);
+            }
         }
 
         /// <inheritdoc />
@@ -87,7 +93,10 @@ namespace CryptoBot.TickerServices.Services.Poloniex
             Preconditions.CheckNotNull(subscriber);
 
             // Unsubscribe subscriber
-            _subscribers.Remove(subscriber);
+            lock (_subscribers)
+            {
+                _subscribers.Remove(subscriber);
+            }
         }
 
         private void OnConnectionBroken(object sender, WampSessionCloseEventArgs e)
@@ -129,9 +138,12 @@ namespace CryptoBot.TickerServices.Services.Poloniex
             Logger.LogTrace("Received new tick: {0}", tickData);
 
             // Notify subscribers
-            foreach (var subscriber in _subscribers)
+            lock (_subscribers)
             {
-                subscriber.OnTick(tickData);
+                foreach (var subscriber in _subscribers)
+                {
+                    subscriber.OnTick(Exchange, tickData);
+                }
             }
         }
     }

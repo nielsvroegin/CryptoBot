@@ -1,11 +1,14 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot", "CryptoBot\CryptoBot.csproj", "{71BB8ADE-B595-404A-BDC1-40100E388FA3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot.Utils", "CryptoBot.Utils\CryptoBot.Utils.csproj", "{738CA403-CDA5-4ECA-B7B2-2B0911E162BE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot.TickerServices", "CryptoBot.TickerServices\CryptoBot.TickerServices.csproj", "{6D5805B2-C342-4EBC-9CD7-B549295C7959}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot.Bots", "CryptoBot.Bots\CryptoBot.Bots.csproj", "{7FD56C51-CD2B-4E98-A431-14F819370CEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,5 +28,12 @@ Global
 		{6D5805B2-C342-4EBC-9CD7-B549295C7959}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D5805B2-C342-4EBC-9CD7-B549295C7959}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D5805B2-C342-4EBC-9CD7-B549295C7959}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FD56C51-CD2B-4E98-A431-14F819370CEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FD56C51-CD2B-4E98-A431-14F819370CEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FD56C51-CD2B-4E98-A431-14F819370CEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FD56C51-CD2B-4E98-A431-14F819370CEB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

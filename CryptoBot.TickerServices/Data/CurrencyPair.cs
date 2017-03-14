@@ -28,6 +28,29 @@ namespace CryptoBot.TickerServices.Data
             BaseCurrency = Preconditions.CheckNotNull(baseCurrency);
             QuoteCurrency = Preconditions.CheckNotNull(quoteCurrency);
         }
+        
+        private bool Equals(CurrencyPair other)
+        {
+            return BaseCurrency == other.BaseCurrency && QuoteCurrency == other.QuoteCurrency;
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((CurrencyPair) obj);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((int) BaseCurrency * 397) ^ (int) QuoteCurrency;
+            }
+        }
 
         /// <inheritdoc />
         public override string ToString()
