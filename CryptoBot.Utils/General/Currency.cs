@@ -1,5 +1,5 @@
 ﻿
-namespace CryptoBot.TickerServices.Data
+namespace CryptoBot.Utils.General
 {
     /// <summary>
     /// Enum for Crypto Currencies
@@ -64,6 +64,11 @@ namespace CryptoBot.TickerServices.Data
         /// <summary>
         /// ClamCoin currency
         /// </summary>
-        Clam
+        Clam,
+
+        /// <summary>
+        /// Bitstar
+        /// </summary>
+        Bits
     }
 }

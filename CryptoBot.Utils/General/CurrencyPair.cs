@@ -1,7 +1,6 @@
 ﻿using System;
-using CryptoBot.Utils.Preconditions;
 
-namespace CryptoBot.TickerServices.Data
+namespace CryptoBot.Utils.General
 {
     /// <summary>
     /// Currency pair data object
@@ -25,8 +24,8 @@ namespace CryptoBot.TickerServices.Data
         /// <param name="quoteCurrency">The quote currency of pair</param>
         public CurrencyPair(Currency baseCurrency, Currency quoteCurrency)
         {
-            BaseCurrency = Preconditions.CheckNotNull(baseCurrency);
-            QuoteCurrency = Preconditions.CheckNotNull(quoteCurrency);
+            BaseCurrency = Preconditions.Preconditions.CheckNotNull(baseCurrency);
+            QuoteCurrency = Preconditions.Preconditions.CheckNotNull(quoteCurrency);
         }
         
         private bool Equals(CurrencyPair other)
@@ -55,7 +54,7 @@ namespace CryptoBot.TickerServices.Data
         /// <inheritdoc />
         public override string ToString()
         {
-            return $"{nameof(BaseCurrency)}: {BaseCurrency}, {nameof(QuoteCurrency)}: {QuoteCurrency}";
+            return $"{BaseCurrency}_{QuoteCurrency}";
         }
 
         /// <summary>

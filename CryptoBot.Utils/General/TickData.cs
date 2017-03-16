@@ -1,7 +1,6 @@
-﻿using System;
-using CryptoBot.Utils.Preconditions;
+﻿
 
-namespace CryptoBot.TickerServices.Data
+namespace CryptoBot.Utils.General
 {
     /// <summary>
     /// Tick data object
@@ -14,34 +13,39 @@ namespace CryptoBot.TickerServices.Data
         public CurrencyPair CurrencyPair { get; private set; }
 
         /// <summary>
+        /// Time of tick
+        /// </summary>
+        public long TickTimeEpoch { get; private set; }
+
+        /// <summary>
         /// Last price
         /// </summary>
-        public double Last { get; private set; }
+        public decimal Last { get; private set; }
 
         /// <summary>
         /// Lowest ask price
         /// </summary>
-        public double LowestAsk { get; private set; }
+        public decimal LowestAsk { get; private set; }
 
         /// <summary>
         /// Highest bid price
         /// </summary>
-        public double HighestBid { get; private set; }
+        public decimal HighestBid { get; private set; }
 
         /// <summary>
         /// 24 hour change
         /// </summary>
-        public double PercentChange { get; private set; }
+        public decimal PercentChange { get; private set; }
 
         /// <summary>
         /// 24 hour volume base
         /// </summary>
-        public double BaseVolume { get; private set; }
+        public decimal BaseVolume { get; private set; }
 
         /// <summary>
         /// 24 hour volume quote
         /// </summary>
-        public double QuoteVolume { get; private set; }
+        public decimal QuoteVolume { get; private set; }
 
         /// <summary>
         /// Is marker frozen
@@ -51,12 +55,12 @@ namespace CryptoBot.TickerServices.Data
         /// <summary>
         /// 24 hour high
         /// </summary>
-        public double DayHigh { get; private set; }
+        public decimal DayHigh { get; private set; }
 
         /// <summary>
         /// 24 hour low
         /// </summary>
-        public double DayLow { get; private set; }
+        public decimal DayLow { get; private set; }
 
         /// <summary>
         /// Constructor
@@ -69,7 +73,7 @@ namespace CryptoBot.TickerServices.Data
         /// <inheritdoc />
         public override string ToString()
         {
-            return $"{nameof(CurrencyPair)}: {CurrencyPair}, {nameof(Last)}: {Last}, {nameof(LowestAsk)}: {LowestAsk}, {nameof(HighestBid)}: {HighestBid}, {nameof(PercentChange)}: {PercentChange}, {nameof(BaseVolume)}: {BaseVolume}, {nameof(QuoteVolume)}: {QuoteVolume}, {nameof(IsFrozen)}: {IsFrozen}, {nameof(DayHigh)}: {DayHigh}, {nameof(DayLow)}: {DayLow}";
+            return $"{nameof(CurrencyPair)}: {CurrencyPair}, {nameof(TickTimeEpoch)}: {TickTimeEpoch}, {nameof(Last)}: {Last}, {nameof(LowestAsk)}: {LowestAsk}, {nameof(HighestBid)}: {HighestBid}, {nameof(PercentChange)}: {PercentChange}, {nameof(BaseVolume)}: {BaseVolume}, {nameof(QuoteVolume)}: {QuoteVolume}, {nameof(IsFrozen)}: {IsFrozen}, {nameof(DayHigh)}: {DayHigh}, {nameof(DayLow)}: {DayLow}";
         }
 
         /// <summary>
@@ -83,17 +87,19 @@ namespace CryptoBot.TickerServices.Data
             /// Constructor
             /// </summary>
             /// <param name="currencyPair">Applicable currency pair for tick</param>
+            /// <param name="tickTimeEpoch">Time of tick in epoch seconds</param>
             /// <param name="last">Last price</param>
-            public Builder(CurrencyPair currencyPair, Double last)
+            public Builder(CurrencyPair currencyPair, long tickTimeEpoch, decimal last)
             {
-                _tickData.CurrencyPair = Preconditions.CheckNotNull(currencyPair);
-                _tickData.Last = Preconditions.CheckNotNull(last);
+                _tickData.CurrencyPair = Preconditions.Preconditions.CheckNotNull(currencyPair);
+                _tickData.TickTimeEpoch = Preconditions.Preconditions.CheckNotNull(tickTimeEpoch);
+                _tickData.Last = Preconditions.Preconditions.CheckNotNull(last);
             }
 
             /// <summary>
             /// Lowest ask price
             /// </summary>
-            public Builder LowestAsk(double lowestAsk)
+            public Builder LowestAsk(decimal lowestAsk)
             {
                 _tickData.LowestAsk = lowestAsk;
                 return this;
@@ -102,7 +108,7 @@ namespace CryptoBot.TickerServices.Data
             /// <summary>
             /// Highest bid price
             /// </summary>
-            public Builder HighestBid(double highestBid)
+            public Builder HighestBid(decimal highestBid)
             {
                 _tickData.HighestBid = highestBid;
                 return this;
@@ -111,7 +117,7 @@ namespace CryptoBot.TickerServices.Data
             /// <summary>
             /// 24 hour change
             /// </summary>
-            public Builder PercentChange(double percentChange)
+            public Builder PercentChange(decimal percentChange)
             {
                 _tickData.PercentChange = percentChange;
                 return this;
@@ -120,7 +126,7 @@ namespace CryptoBot.TickerServices.Data
             /// <summary>
             /// 24 hour volume base
             /// </summary>
-            public Builder BaseVolume(double baseVolume)
+            public Builder BaseVolume(decimal baseVolume)
             {
                 _tickData.BaseVolume = baseVolume;
                 return this;
@@ -129,7 +135,7 @@ namespace CryptoBot.TickerServices.Data
             /// <summary>
             /// 24 hour volume quote
             /// </summary>
-            public Builder QuoteVolume(double quoteVolume)
+            public Builder QuoteVolume(decimal quoteVolume)
             {
                 _tickData.QuoteVolume = quoteVolume;
                 return this;
@@ -147,7 +153,7 @@ namespace CryptoBot.TickerServices.Data
             /// <summary>
             /// 24 hour high
             /// </summary>
-            public Builder DayHigh(double dayHigh)
+            public Builder DayHigh(decimal dayHigh)
             {
                 _tickData.DayHigh = dayHigh;
                 return this;
@@ -156,7 +162,7 @@ namespace CryptoBot.TickerServices.Data
             /// <summary>
             /// 24 hour low
             /// </summary>
-            public Builder DayLow(double dayLow)
+            public Builder DayLow(decimal dayLow)
             {
                 _tickData.DayLow = dayLow;
                 return this;

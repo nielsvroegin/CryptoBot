@@ -1,5 +1,4 @@
-﻿using CryptoBot.TickerServices.Data;
-using CryptoBot.Utils.Enums;
+﻿using CryptoBot.Utils.General;
 
 namespace CryptoBot.TickerServices
 {

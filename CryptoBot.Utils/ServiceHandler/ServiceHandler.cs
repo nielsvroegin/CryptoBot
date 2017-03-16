@@ -5,7 +5,7 @@ namespace CryptoBot.Utils.ServiceHandler
     /// <summary>
     /// Helper class to manage services
     /// </summary>
-    public class ServiceHandler
+    public sealed class ServiceHandler
     {
         private readonly IList<IManagedService> _managedServices = new List<IManagedService>();
 
@@ -15,7 +15,7 @@ namespace CryptoBot.Utils.ServiceHandler
         /// <param name="service">Service to start and manage</param>
         /// <returns>The started service</returns>
         public T Start<T> (T service) where T : IManagedService
-        {
+        {   
             _managedServices.Add(service);
 
             service.Start();

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using CryptoBot.TickerServices.Data;
-using CryptoBot.Utils.Enums;
+using CryptoBot.Utils.General;
 
 namespace CryptoBot.Bots
 {

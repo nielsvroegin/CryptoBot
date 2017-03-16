@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CryptoBot.Utils.Enums
+﻿namespace CryptoBot.Utils.General
 {
     /// <summary>
     /// Enum for different exchanges

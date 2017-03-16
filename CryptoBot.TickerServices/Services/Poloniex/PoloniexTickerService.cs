@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CryptoBot.TickerServices.Data;
-using CryptoBot.Utils.Enums;
+using CryptoBot.Utils.General;
 using CryptoBot.Utils.Logging;
 using CryptoBot.Utils.Preconditions;
 using CryptoBot.Utils.ServiceHandler;
@@ -124,15 +123,15 @@ namespace CryptoBot.TickerServices.Services.Poloniex
             }
 
             // Convert data to TickData
-            var tickData = new TickData.Builder(currencyPair, arguments[1].Deserialize<double>())
-                .LowestAsk(arguments[2].Deserialize<double>())
-                .HighestBid(arguments[3].Deserialize<double>())
-                .PercentChange(arguments[4].Deserialize<double>())
-                .BaseVolume(arguments[5].Deserialize<double>())
-                .QuoteVolume(arguments[6].Deserialize<double>())
+            var tickData = new TickData.Builder(currencyPair, DateTimeOffset.Now.ToUnixTimeSeconds(), arguments[1].Deserialize<decimal>())
+                .LowestAsk(arguments[2].Deserialize<decimal>())
+                .HighestBid(arguments[3].Deserialize<decimal>())
+                .PercentChange(arguments[4].Deserialize<decimal>())
+                .BaseVolume(arguments[5].Deserialize<decimal>())
+                .QuoteVolume(arguments[6].Deserialize<decimal>())
                 .IsFrozen(arguments[7].Deserialize<byte>() > 0)
-                .DayHigh(arguments[8].Deserialize<double>())
-                .DayLow(arguments[9].Deserialize<double>())
+                .DayHigh(arguments[8].Deserialize<decimal>())
+                .DayLow(arguments[9].Deserialize<decimal>())
                 .Build();
 
             Logger.LogTrace("Received new tick: {0}", tickData);

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using CryptoBot.Instrument;
 using CryptoBot.TickerServices;
-using CryptoBot.TickerServices.Data;
-using CryptoBot.Utils.Enums;
+using CryptoBot.Utils.General;
 using CryptoBot.Utils.Logging;
+using CryptoBot.Utils.Preconditions;
 using CryptoBot.Utils.ServiceHandler;
 using Microsoft.Extensions.Logging;
 
@@ -15,6 +16,7 @@ namespace CryptoBot.Bots
     {
         private static readonly ILogger Logger = ApplicationLogging.CreateLogger<BotHandlerService>();
 
+        private readonly InstrumentManager instrumentManager = new InstrumentManager();
         private readonly IList<IBotStrategy> _botStrategies = new List<IBotStrategy>();
         private readonly IList<ITickerService> _tickerServices = new List<ITickerService>();
 
@@ -66,6 +68,9 @@ namespace CryptoBot.Bots
         /// <param name="tickData">Information regarding tick</param>
         public void OnTick(Exchange exchange, TickData tickData)
         {
+            Preconditions.CheckNotNull(exchange);
+            Preconditions.CheckNotNull(tickData);
+
             foreach (var botStrategy in _botStrategies)
             {
                 // Verify if bot strategy was created for this exchange
@@ -80,6 +85,7 @@ namespace CryptoBot.Bots
                     continue;
                 }
 
+                instrumentManager.Update(exchange, tickData);
                 botStrategy.HandleTick(tickData);
             }
         }
@@ -96,6 +102,8 @@ namespace CryptoBot.Bots
             /// </summary>
             public Builder RegisterTickerService(ITickerService tickerService)
             {
+                Preconditions.CheckNotNull(tickerService);
+
                 _botHandlerService._tickerServices.Add(tickerService);
                 return this;
             }
@@ -105,6 +113,8 @@ namespace CryptoBot.Bots
             /// </summary>
             public Builder RegisterBotStrategy(IBotStrategy botStrategy)
             {
+                Preconditions.CheckNotNull(botStrategy);
+
                 _botHandlerService._botStrategies.Add(botStrategy);
                 return this;
             }
