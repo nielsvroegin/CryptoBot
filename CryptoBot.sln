@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot.Bots", "CryptoBot
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot.Instrument", "CryptoBot.Instrument\CryptoBot.Instrument.csproj", "{1CB2888E-C389-4A9B-84C1-4CB249B379FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot.ExchangeApi", "CryptoBot.ExchangeApi\CryptoBot.ExchangeApi.csproj", "{7EEBF791-AC3B-4C3C-AB9A-AA7BB09922E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{1CB2888E-C389-4A9B-84C1-4CB249B379FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CB2888E-C389-4A9B-84C1-4CB249B379FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CB2888E-C389-4A9B-84C1-4CB249B379FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EEBF791-AC3B-4C3C-AB9A-AA7BB09922E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EEBF791-AC3B-4C3C-AB9A-AA7BB09922E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EEBF791-AC3B-4C3C-AB9A-AA7BB09922E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EEBF791-AC3B-4C3C-AB9A-AA7BB09922E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

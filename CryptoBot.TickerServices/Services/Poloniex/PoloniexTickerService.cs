@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using CryptoBot.Utils.General;
 using CryptoBot.Utils.Logging;
-using CryptoBot.Utils.Preconditions;
+using CryptoBot.Utils.Assertions;
 using CryptoBot.Utils.ServiceHandler;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using WampSharp.Binding;
 using WampSharp.Core.Listener;
 using WampSharp.V2;
-using WampSharp.WebSockets;
 using WampSharp.V2.Client;
 using WampSharp.V2.Realm;
+using WampSharp.WebSocket4Net;
 
 namespace CryptoBot.TickerServices.Services.Poloniex
 {
@@ -53,7 +53,7 @@ namespace CryptoBot.TickerServices.Services.Poloniex
         {
             // Open channel to poloniex
             var mJsonBinding = new JTokenJsonBinding();
-            Func<IControlledWampConnection<JToken>> connectionFactory = () => new ControlledTextWebSocketConnection<JToken>(new Uri(ServerAddress), mJsonBinding);
+			Func<IControlledWampConnection<JToken>> connectionFactory = () => new WebSocket4NetTextConnection<JToken>(ServerAddress, mJsonBinding);
             _channel = _wampChannelFactory.CreateChannel("realm1", connectionFactory, mJsonBinding);
             _channel.RealmProxy.Monitor.ConnectionBroken += OnConnectionBroken;
             _channel.Open().Wait(5000);

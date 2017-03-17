@@ -3,7 +3,7 @@ using CryptoBot.Instrument;
 using CryptoBot.TickerServices;
 using CryptoBot.Utils.General;
 using CryptoBot.Utils.Logging;
-using CryptoBot.Utils.Preconditions;
+using CryptoBot.Utils.Assertions;
 using CryptoBot.Utils.ServiceHandler;
 using Microsoft.Extensions.Logging;
 

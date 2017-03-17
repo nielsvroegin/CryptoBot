@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CryptoBot.Utils\CryptoBot.Utils.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Poloniex\" />
+  </ItemGroup>
+</Project>

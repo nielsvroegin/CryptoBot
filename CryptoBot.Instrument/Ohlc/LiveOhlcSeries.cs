@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using CryptoBot.Utils.General;
-using CryptoBot.Utils.Preconditions;
+using CryptoBot.Utils.Assertions;
 
 namespace CryptoBot.Instrument.Ohlc
 {
@@ -9,11 +9,26 @@ namespace CryptoBot.Instrument.Ohlc
         private const int MaxSeriesSize = 100;
         private readonly IList<OhlcItem> _ohlcItems = new List<OhlcItem>();
 
+        public bool HasData { get { return _ohlcItems.Count > 0; } }
         public int TimeSpanSeconds { get; }
 
         public LiveOhlcSeries(int timeSpanSeconds)
         {
             TimeSpanSeconds = Preconditions.CheckNotNull(timeSpanSeconds);
+        }
+
+        public void Initialize(List<OhlcItem> ohlcItems)
+        {
+			Preconditions.CheckNotNull(ohlcItems);
+
+            // Clear all current data
+            _ohlcItems.Clear();
+
+            // Add items in same order to list
+            foreach (var ohlcItem in ohlcItems)
+            {
+                _ohlcItems.Add(ohlcItem);
+            }
         }
 
         public void AddTick(TickData tickData)

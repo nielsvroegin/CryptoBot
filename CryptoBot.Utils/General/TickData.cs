@@ -1,5 +1,7 @@
 ﻿
 
+using CryptoBot.Utils.Assertions;
+
 namespace CryptoBot.Utils.General
 {
     /// <summary>
@@ -91,9 +93,9 @@ namespace CryptoBot.Utils.General
             /// <param name="last">Last price</param>
             public Builder(CurrencyPair currencyPair, long tickTimeEpoch, decimal last)
             {
-                _tickData.CurrencyPair = Preconditions.Preconditions.CheckNotNull(currencyPair);
-                _tickData.TickTimeEpoch = Preconditions.Preconditions.CheckNotNull(tickTimeEpoch);
-                _tickData.Last = Preconditions.Preconditions.CheckNotNull(last);
+                _tickData.CurrencyPair = Preconditions.CheckNotNull(currencyPair);
+                _tickData.TickTimeEpoch = Preconditions.CheckNotNull(tickTimeEpoch);
+                _tickData.Last = Preconditions.CheckNotNull(last);
             }
 
             /// <summary>

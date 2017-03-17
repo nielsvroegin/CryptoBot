@@ -1,4 +1,5 @@
 ﻿using System;
+using CryptoBot.Utils.Assertions;
 
 namespace CryptoBot.Utils.General
 {
@@ -24,8 +25,8 @@ namespace CryptoBot.Utils.General
         /// <param name="quoteCurrency">The quote currency of pair</param>
         public CurrencyPair(Currency baseCurrency, Currency quoteCurrency)
         {
-            BaseCurrency = Preconditions.Preconditions.CheckNotNull(baseCurrency);
-            QuoteCurrency = Preconditions.Preconditions.CheckNotNull(quoteCurrency);
+            BaseCurrency = Preconditions.CheckNotNull(baseCurrency);
+            QuoteCurrency = Preconditions.CheckNotNull(quoteCurrency);
         }
         
         private bool Equals(CurrencyPair other)

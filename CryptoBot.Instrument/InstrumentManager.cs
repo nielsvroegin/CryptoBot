@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using CryptoBot.Utils.General;
-using CryptoBot.Utils.Preconditions;
+using CryptoBot.Utils.Assertions;
 
 namespace CryptoBot.Instrument
 {

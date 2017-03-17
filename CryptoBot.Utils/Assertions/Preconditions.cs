@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CryptoBot.Utils.Preconditions
+namespace CryptoBot.Utils.Assertions
 {
     /// <summary>
     /// Preconditions helper class
@@ -12,7 +12,7 @@ namespace CryptoBot.Utils.Preconditions
         /// </summary>
         public static T CheckNotNull<T>(T obj)
         {
-            if (obj == null)
+            if (ReferenceEquals(obj, null))
             {
                 throw new NullReferenceException();
             }
