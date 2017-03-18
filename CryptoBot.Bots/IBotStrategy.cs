@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using CryptoBot.ExchangeApi.Market;
+using CryptoBot.Instrument.Static;
 using CryptoBot.Utils.General;
 
 namespace CryptoBot.Bots
@@ -23,7 +25,7 @@ namespace CryptoBot.Bots
         /// <summary>
         /// Initialize bot strategy
         /// </summary>
-        void Init();
+        void Init(IMarketApi marketApi);
 
         /// <summary>
         /// Deinitialize bot strategy
@@ -33,6 +35,6 @@ namespace CryptoBot.Bots
         /// <summary>
         /// Handle a new Tick
         /// </summary>
-        void HandleTick(TickData tickData);
+        void HandleTick(TickData tickData, OhlcInstrument instrument, IMarketApi marketApi);
     }
 }

@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Threading.Tasks;
 using CryptoBot.Utils.General;
 
-namespace CryptoBot.ExchangeApi
+namespace CryptoBot.ExchangeApi.Market
 {
-    public interface IExchangeApi
+    public interface IMarketApi
     {
         /// <summary>
-        /// Get the kind of Exchange this ExchangeApi is using
+        /// Get the kind of Exchange this MarketApi is using
         /// </summary>
         Exchange Exchange { get; }
 
@@ -18,6 +19,7 @@ namespace CryptoBot.ExchangeApi
         /// <param name="endTime">End time of series</param>
         /// <param name="ohlcTimeSpanSeconds">Timespan of a single ohlc item in second.</param>
         /// <returns>The loaded ohlc series</returns>
-        OhlcSeries ReadOhlcSeries(CurrencyPair currencyPair, DateTime startTime, DateTime endTime, int ohlcTimeSpanSeconds);
+        /// <exception cref="ExchangeApiException">ExchangeApiException thrown when any error occurred during request</exception>
+        Task<OhlcSeries> ReadOhlcSeries(CurrencyPair currencyPair, DateTime startTime, DateTime endTime, int ohlcTimeSpanSeconds);
     }
 }

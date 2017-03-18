@@ -12,6 +12,11 @@ namespace CryptoBot.Utils.General
         /// <summary>
         /// Applicable currency pair for tick
         /// </summary>
+        public Exchange Exchange { get; private set; }
+
+        /// <summary>
+        /// Applicable currency pair for tick
+        /// </summary>
         public CurrencyPair CurrencyPair { get; private set; }
 
         /// <summary>
@@ -88,11 +93,13 @@ namespace CryptoBot.Utils.General
             /// <summary>
             /// Constructor
             /// </summary>
+            /// <param name="exchange">Exchange that provided this tick</param>
             /// <param name="currencyPair">Applicable currency pair for tick</param>
             /// <param name="tickTimeEpoch">Time of tick in epoch seconds</param>
             /// <param name="last">Last price</param>
-            public Builder(CurrencyPair currencyPair, long tickTimeEpoch, decimal last)
+            public Builder(Exchange exchange, CurrencyPair currencyPair, long tickTimeEpoch, decimal last)
             {
+                _tickData.Exchange = Preconditions.CheckNotNull(exchange);
                 _tickData.CurrencyPair = Preconditions.CheckNotNull(currencyPair);
                 _tickData.TickTimeEpoch = Preconditions.CheckNotNull(tickTimeEpoch);
                 _tickData.Last = Preconditions.CheckNotNull(last);

@@ -19,18 +19,16 @@ namespace CryptoBot.Utils.General
         /// Gets the ohlc items
         /// </summary>
         public ImmutableList<OhlcItem> OhlcItems { get; }
-
+        
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="timeSpanSeconds">Time span in seconds per OhlcItem</param>
         /// <param name="ohlcItems">List of ohlc items</param>
-        public OhlcSeries(int timeSpanSeconds, IList<OhlcItem> ohlcItems)
+        public OhlcSeries(int timeSpanSeconds, ImmutableList<OhlcItem> ohlcItems)
         {
-            Preconditions.CheckNotNull(ohlcItems);
-
             TimeSpanSeconds = Preconditions.CheckNotNull(timeSpanSeconds);
-            OhlcItems = ImmutableList.CreateRange(ohlcItems);
+            OhlcItems = Preconditions.CheckNotNull(ohlcItems);
         }
     }
 }

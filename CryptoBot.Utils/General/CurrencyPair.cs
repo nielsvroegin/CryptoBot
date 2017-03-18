@@ -55,7 +55,7 @@ namespace CryptoBot.Utils.General
         /// <inheritdoc />
         public override string ToString()
         {
-            return $"{BaseCurrency}_{QuoteCurrency}";
+            return $"{BaseCurrency.ToString().ToUpper()}_{QuoteCurrency.ToString().ToUpper()}";
         }
 
         /// <summary>

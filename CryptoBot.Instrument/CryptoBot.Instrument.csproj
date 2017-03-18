@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CryptoBot.ExchangeApi\CryptoBot.ExchangeApi.csproj" />
     <ProjectReference Include="..\CryptoBot.Utils\CryptoBot.Utils.csproj" />
   </ItemGroup>
 

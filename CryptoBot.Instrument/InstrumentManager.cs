@@ -1,27 +1,47 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using CryptoBot.ExchangeApi.Market;
+using CryptoBot.Instrument.Live;
+using CryptoBot.Instrument.Static;
 using CryptoBot.Utils.General;
 using CryptoBot.Utils.Assertions;
 
 namespace CryptoBot.Instrument
 {
-    public sealed class InstrumentManager
+    public sealed class InstrumentManager : IInstrumentManager
     {
-        private readonly ConcurrentDictionary<String, LiveInstrument> _liveInstruments = new ConcurrentDictionary<String, LiveInstrument>();
+        private readonly IList<LiveOhlcInstrument> _liveInstruments = new List<LiveOhlcInstrument>();
 
-        public void Update(Exchange exchange, TickData tickData)
+        public void Create(Exchange exchange, CurrencyPair currencyPair, IMarketApi marketApi)
         {
             Preconditions.CheckNotNull(exchange);
+            Preconditions.CheckNotNull(currencyPair);
+            Preconditions.CheckNotNull(marketApi);
+
+            // Check if LiveInstrument doesn't already exist for exchange/currenypair
+            if (_liveInstruments.Any(i => i.Exchange == exchange && i.CurrencyPair.Equals(currencyPair)))
+            {
+                return;
+            }
+
+            _liveInstruments.Add(new LiveOhlcInstrument(exchange, currencyPair, marketApi));
+        }
+
+        public async Task<OhlcInstrument> Update(TickData tickData)
+        {
             Preconditions.CheckNotNull(tickData);
 
-            var currencyPair = tickData.CurrencyPair;
-            var instrumentKey = string.Format("{0}_{1}_{2}", exchange, currencyPair.BaseCurrency, currencyPair.QuoteCurrency);
+            var instrument = _liveInstruments.FirstOrDefault(i => i.Exchange == tickData.Exchange && i.CurrencyPair.Equals(tickData.CurrencyPair));
 
-            // Get or add the instrument
-            var instrument  = _liveInstruments.GetOrAdd(instrumentKey, s => new LiveInstrument(exchange, currencyPair));
-
+            // When instrument doesn't exist, no update necessary
+            if (ReferenceEquals(instrument, null))
+            {
+                return null;
+            }
+            
             // Update instrument with TickData
-            instrument.Update(tickData);
+            return await instrument.Update(tickData);
         }
     }
 }

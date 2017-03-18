@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CryptoBot.ExchangeApi\CryptoBot.ExchangeApi.csproj" />
     <ProjectReference Include="..\CryptoBot.Instrument\CryptoBot.Instrument.csproj" />
     <ProjectReference Include="..\CryptoBot.TickerServices\CryptoBot.TickerServices.csproj" />
     <ProjectReference Include="..\CryptoBot.Utils\CryptoBot.Utils.csproj" />

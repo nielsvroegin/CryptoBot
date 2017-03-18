@@ -3,6 +3,8 @@ using System.Runtime.Loader;
 using System.Threading;
 using CryptoBot.Bots;
 using CryptoBot.Bots.Strategies.Cowabunga;
+using CryptoBot.ExchangeApi.Market.Poloniex;
+using CryptoBot.Instrument;
 using CryptoBot.TickerServices.Services.Poloniex;
 using CryptoBot.Utils.Logging;
 using CryptoBot.Utils.ServiceHandler;
@@ -54,16 +56,28 @@ namespace CryptoBot
             // Create ticker services
             var poloniexTickerService = ServiceHandler.Start(new PoloniexTickerService());
 
+            // Create market apis
+            var poloniexMarketApi = new PoloniexMarketApi();
+
             // Create bot strategies
             var cowabungaStrategy = new CowabungaStrategy();
 
-            // Build and start BotHandlerService
-            var botHandlerService = new BotHandlerService.Builder()
+            // Build BotHandlerService
+            var botHandlerService = new BotHandlerService.Builder(new InstrumentManager())
                 .RegisterTickerService(poloniexTickerService)
+                .RegisterMarketApi(poloniexMarketApi)
                 .RegisterBotStrategy(cowabungaStrategy)
                 .Build();
 
-            ServiceHandler.Start(botHandlerService);
+            // Start the BotHandlerService
+            try
+            {
+                ServiceHandler.Start(botHandlerService);
+            }
+            catch (BotHandlerException e)
+            {
+                Logger.LogCritical("BotHandler could not be started", e);
+            }
         }
 
         private static void StopApp()

@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using CryptoBot.Utils.General;
 using CryptoBot.Utils.Assertions;
 
-namespace CryptoBot.Instrument.Ohlc
+namespace CryptoBot.Instrument.Live
 {
     internal sealed class LiveOhlcSeries
     {
-        private const int MaxSeriesSize = 100;
         private readonly IList<OhlcItem> _ohlcItems = new List<OhlcItem>();
 
-        public bool HasData { get { return _ohlcItems.Count > 0; } }
+        public int MaxSeriesSize => 100;
+        public bool Initialized { get; private set; }
         public int TimeSpanSeconds { get; }
 
         public LiveOhlcSeries(int timeSpanSeconds)
@@ -17,7 +18,7 @@ namespace CryptoBot.Instrument.Ohlc
             TimeSpanSeconds = Preconditions.CheckNotNull(timeSpanSeconds);
         }
 
-        public void Initialize(List<OhlcItem> ohlcItems)
+        public void Initialize(IList<OhlcItem> ohlcItems)
         {
 			Preconditions.CheckNotNull(ohlcItems);
 
@@ -29,6 +30,8 @@ namespace CryptoBot.Instrument.Ohlc
             {
                 _ohlcItems.Add(ohlcItem);
             }
+
+            Initialized = true;
         }
 
         public void AddTick(TickData tickData)
@@ -44,7 +47,12 @@ namespace CryptoBot.Instrument.Ohlc
             // Remove old OhlcItems
             RemoveOldOhlcItems();
         }
-        
+
+        public OhlcSeries ToOhlcSeries()
+        {
+            return new OhlcSeries(TimeSpanSeconds, ImmutableList.CreateRange(_ohlcItems));
+        }
+
         private void FillOhlcGaps(TickData tickData)
         {
             // No gaps when first item must yet be created

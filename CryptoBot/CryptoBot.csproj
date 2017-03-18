@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CryptoBot.Bots\CryptoBot.Bots.csproj" />
+    <ProjectReference Include="..\CryptoBot.ExchangeApi\CryptoBot.ExchangeApi.csproj" />
     <ProjectReference Include="..\CryptoBot.Utils\CryptoBot.Utils.csproj" />
     <ProjectReference Include="..\CryptoBot.TickerServices\CryptoBot.TickerServices.csproj" />
   </ItemGroup>

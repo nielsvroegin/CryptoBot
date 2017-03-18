@@ -123,7 +123,7 @@ namespace CryptoBot.TickerServices.Services.Poloniex
             }
 
             // Convert data to TickData
-            var tickData = new TickData.Builder(currencyPair, DateTimeOffset.Now.ToUnixTimeSeconds(), arguments[1].Deserialize<decimal>())
+            var tickData = new TickData.Builder(Exchange, currencyPair, DateTimeOffset.Now.ToUnixTimeSeconds(), arguments[1].Deserialize<decimal>())
                 .LowestAsk(arguments[2].Deserialize<decimal>())
                 .HighestBid(arguments[3].Deserialize<decimal>())
                 .PercentChange(arguments[4].Deserialize<decimal>())

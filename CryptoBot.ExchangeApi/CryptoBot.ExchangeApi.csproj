@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -9,6 +9,6 @@
     <ProjectReference Include="..\CryptoBot.Utils\CryptoBot.Utils.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Poloniex\" />
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
 </Project>
