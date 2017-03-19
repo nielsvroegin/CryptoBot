@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.Loader;
 using System.Threading;
 using CryptoBot.Bots;
 using CryptoBot.Bots.Strategies.Cowabunga;
@@ -29,10 +28,8 @@ namespace CryptoBot
                 QuitEvent.Set();
                 eArgs.Cancel = true;
             };
-            AssemblyLoadContext.Default.Unloading += context =>
-            {
-                QuitEvent.Set();
-            };
+            
+            // TODO: Handle linux signals
 
             // Start the application
             StartApp();

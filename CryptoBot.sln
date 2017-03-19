@@ -2,17 +2,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot", "CryptoBot\CryptoBot.csproj", "{71BB8ADE-B595-404A-BDC1-40100E388FA3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot.Utils", "CryptoBot.Utils\CryptoBot.Utils.csproj", "{C55C243D-A6DA-49F8-9075-FF8E4EE09D1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot.Utils", "CryptoBot.Utils\CryptoBot.Utils.csproj", "{738CA403-CDA5-4ECA-B7B2-2B0911E162BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot.TickerServices", "CryptoBot.TickerServices\CryptoBot.TickerServices.csproj", "{1A70B806-4912-44EE-BACD-C0ACFB14025F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot.TickerServices", "CryptoBot.TickerServices\CryptoBot.TickerServices.csproj", "{6D5805B2-C342-4EBC-9CD7-B549295C7959}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot.Instrument", "CryptoBot.Instrument\CryptoBot.Instrument.csproj", "{D2C6D255-DABC-4CCD-9D1B-A93D1C0AD176}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot.Bots", "CryptoBot.Bots\CryptoBot.Bots.csproj", "{7FD56C51-CD2B-4E98-A431-14F819370CEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot.ExchangeApi", "CryptoBot.ExchangeApi\CryptoBot.ExchangeApi.csproj", "{05C7B184-83F4-4C37-BFB9-3171D928DDCC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot.Instrument", "CryptoBot.Instrument\CryptoBot.Instrument.csproj", "{1CB2888E-C389-4A9B-84C1-4CB249B379FE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot.Bots", "CryptoBot.Bots\CryptoBot.Bots.csproj", "{6E8A5D6D-7FC3-4E53-8A4C-26BF1537E405}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot.ExchangeApi", "CryptoBot.ExchangeApi\CryptoBot.ExchangeApi.csproj", "{7EEBF791-AC3B-4C3C-AB9A-AA7BB09922E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot", "CryptoBot\CryptoBot.csproj", "{3CFC31FE-B825-46DD-9B06-2EE1CE4F096B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,30 +20,30 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{71BB8ADE-B595-404A-BDC1-40100E388FA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{71BB8ADE-B595-404A-BDC1-40100E388FA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{71BB8ADE-B595-404A-BDC1-40100E388FA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{71BB8ADE-B595-404A-BDC1-40100E388FA3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{738CA403-CDA5-4ECA-B7B2-2B0911E162BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{738CA403-CDA5-4ECA-B7B2-2B0911E162BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{738CA403-CDA5-4ECA-B7B2-2B0911E162BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{738CA403-CDA5-4ECA-B7B2-2B0911E162BE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D5805B2-C342-4EBC-9CD7-B549295C7959}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D5805B2-C342-4EBC-9CD7-B549295C7959}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D5805B2-C342-4EBC-9CD7-B549295C7959}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D5805B2-C342-4EBC-9CD7-B549295C7959}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7FD56C51-CD2B-4E98-A431-14F819370CEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7FD56C51-CD2B-4E98-A431-14F819370CEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7FD56C51-CD2B-4E98-A431-14F819370CEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7FD56C51-CD2B-4E98-A431-14F819370CEB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1CB2888E-C389-4A9B-84C1-4CB249B379FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1CB2888E-C389-4A9B-84C1-4CB249B379FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1CB2888E-C389-4A9B-84C1-4CB249B379FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1CB2888E-C389-4A9B-84C1-4CB249B379FE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7EEBF791-AC3B-4C3C-AB9A-AA7BB09922E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7EEBF791-AC3B-4C3C-AB9A-AA7BB09922E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7EEBF791-AC3B-4C3C-AB9A-AA7BB09922E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7EEBF791-AC3B-4C3C-AB9A-AA7BB09922E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C55C243D-A6DA-49F8-9075-FF8E4EE09D1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C55C243D-A6DA-49F8-9075-FF8E4EE09D1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C55C243D-A6DA-49F8-9075-FF8E4EE09D1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C55C243D-A6DA-49F8-9075-FF8E4EE09D1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A70B806-4912-44EE-BACD-C0ACFB14025F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A70B806-4912-44EE-BACD-C0ACFB14025F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A70B806-4912-44EE-BACD-C0ACFB14025F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A70B806-4912-44EE-BACD-C0ACFB14025F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2C6D255-DABC-4CCD-9D1B-A93D1C0AD176}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2C6D255-DABC-4CCD-9D1B-A93D1C0AD176}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2C6D255-DABC-4CCD-9D1B-A93D1C0AD176}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2C6D255-DABC-4CCD-9D1B-A93D1C0AD176}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05C7B184-83F4-4C37-BFB9-3171D928DDCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05C7B184-83F4-4C37-BFB9-3171D928DDCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05C7B184-83F4-4C37-BFB9-3171D928DDCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05C7B184-83F4-4C37-BFB9-3171D928DDCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E8A5D6D-7FC3-4E53-8A4C-26BF1537E405}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E8A5D6D-7FC3-4E53-8A4C-26BF1537E405}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E8A5D6D-7FC3-4E53-8A4C-26BF1537E405}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E8A5D6D-7FC3-4E53-8A4C-26BF1537E405}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CFC31FE-B825-46DD-9B06-2EE1CE4F096B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CFC31FE-B825-46DD-9B06-2EE1CE4F096B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CFC31FE-B825-46DD-9B06-2EE1CE4F096B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CFC31FE-B825-46DD-9B06-2EE1CE4F096B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

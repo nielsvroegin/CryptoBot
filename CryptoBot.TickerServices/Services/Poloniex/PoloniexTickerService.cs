@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CryptoBot.Utils.General;
 using CryptoBot.Utils.Logging;
 using CryptoBot.Utils.Assertions;
+using CryptoBot.Utils.Helpers;
 using CryptoBot.Utils.ServiceHandler;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
@@ -123,7 +124,7 @@ namespace CryptoBot.TickerServices.Services.Poloniex
             }
 
             // Convert data to TickData
-            var tickData = new TickData.Builder(Exchange, currencyPair, DateTimeOffset.Now.ToUnixTimeSeconds(), arguments[1].Deserialize<decimal>())
+            var tickData = new TickData.Builder(Exchange, currencyPair, DateTimeHelper.ToUnixTime(DateTime.Now), arguments[1].Deserialize<decimal>())
                 .LowestAsk(arguments[2].Deserialize<decimal>())
                 .HighestBid(arguments[3].Deserialize<decimal>())
                 .PercentChange(arguments[4].Deserialize<decimal>())
