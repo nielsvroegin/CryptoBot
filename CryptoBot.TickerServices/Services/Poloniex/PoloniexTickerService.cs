@@ -5,7 +5,7 @@ using CryptoBot.Utils.Logging;
 using CryptoBot.Utils.Assertions;
 using CryptoBot.Utils.Helpers;
 using CryptoBot.Utils.ServiceHandler;
-using Microsoft.Extensions.Logging;
+using log4net;
 using Newtonsoft.Json.Linq;
 using WampSharp.Binding;
 using WampSharp.Core.Listener;
@@ -21,7 +21,7 @@ namespace CryptoBot.TickerServices.Services.Poloniex
     /// </summary>
     public sealed class PoloniexTickerService : IManagedService, ITickerService
     {
-        private static readonly ILogger Logger = ApplicationLogging.CreateLogger<PoloniexTickerService>();
+        private static readonly ILog Logger = ApplicationLogging.CreateLogger<PoloniexTickerService>();
         private const string ServerAddress = "wss://api.poloniex.com";
         private const string TickerTopic = "ticker";
 
@@ -62,7 +62,7 @@ namespace CryptoBot.TickerServices.Services.Poloniex
             // Subscribe to ticker topic
             _subscription = _channel.RealmProxy.Services.GetSubject(TickerTopic).Subscribe(x => ProcessTick(x.Arguments));
 
-            Logger.LogInformation("Poloniex ticker service has been started");
+            Logger.Info("Poloniex ticker service has been started");
         }
 
         /// <inheritdoc />
@@ -72,7 +72,7 @@ namespace CryptoBot.TickerServices.Services.Poloniex
             _subscription.Dispose();
             _channel.Close();
 
-            Logger.LogInformation("Poloniex ticker service has been stopped");
+            Logger.Info("Poloniex ticker service has been stopped");
         }
 
         /// <inheritdoc />
@@ -119,7 +119,7 @@ namespace CryptoBot.TickerServices.Services.Poloniex
             var currencyPair = CurrencyPair.Parse(currencyPairStr);
             if (ReferenceEquals(currencyPair, null))
             {
-                Logger.LogTrace("Received tick of unknown currency Pair '{0}', skipping tick", currencyPairStr);
+                Logger.Debug($"Received tick of unknown currency Pair '{currencyPairStr}', skipping tick");
                 return;
             }
 
@@ -135,7 +135,7 @@ namespace CryptoBot.TickerServices.Services.Poloniex
                 .DayLow(arguments[9].Deserialize<decimal>())
                 .Build();
 
-            Logger.LogTrace("Received new tick: {0}", tickData);
+            Logger.Debug($"Received new tick: {tickData}");
 
             // Notify subscribers
             lock (_subscribers)

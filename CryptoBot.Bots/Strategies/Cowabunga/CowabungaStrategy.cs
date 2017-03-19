@@ -2,7 +2,7 @@
 using CryptoBot.Instrument.Static;
 using CryptoBot.Utils.General;
 using CryptoBot.Utils.Logging;
-using Microsoft.Extensions.Logging;
+using log4net;
 
 namespace CryptoBot.Bots.Strategies.Cowabunga
 {
@@ -11,7 +11,7 @@ namespace CryptoBot.Bots.Strategies.Cowabunga
     /// </summary>
     public class CowabungaStrategy : IBotStrategy
     {
-        private static readonly ILogger Logger = ApplicationLogging.CreateLogger<CowabungaStrategy>();
+        private static readonly ILog Logger = ApplicationLogging.CreateLogger<CowabungaStrategy>();
 
         /// <inheritdoc />
         public Exchange Exchange => Exchange.Poloniex;
@@ -22,19 +22,19 @@ namespace CryptoBot.Bots.Strategies.Cowabunga
         /// <inheritdoc />
         public void Init(IMarketApi marketApi)
         {
-            Logger.LogInformation("Cowabunga strategy initialized");
+            Logger.Info("Cowabunga strategy initialized");
         }
 
         /// <inheritdoc />
         public void Deinit()
         {
-            Logger.LogInformation("Cowabunga strategy deinitialized");
+            Logger.Info("Cowabunga strategy deinitialized");
         }
 
         /// <inheritdoc />
         public void HandleTick(TickData tickData, OhlcInstrument instrument, IMarketApi marketApi)
         {
-            Logger.LogInformation("Cowabunga tickdata: {0}", tickData);
+            Logger.Info($"Cowabunga tickdata: {tickData}");
         }
     }
 }

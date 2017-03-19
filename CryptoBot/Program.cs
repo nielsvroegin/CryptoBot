@@ -7,22 +7,23 @@ using CryptoBot.Instrument;
 using CryptoBot.TickerServices.Services.Poloniex;
 using CryptoBot.Utils.Logging;
 using CryptoBot.Utils.ServiceHandler;
-using Microsoft.Extensions.Logging;
+using log4net;
+using log4net.Config;
 
 namespace CryptoBot
 {
     internal class Program
     {
-        private static readonly ILogger Logger = ApplicationLogging.CreateLogger<Program>();
+        private static readonly ILog Logger = ApplicationLogging.CreateLogger<Program>();
         private static readonly ManualResetEvent QuitEvent = new ManualResetEvent(false);
         private static readonly ServiceHandler ServiceHandler = new ServiceHandler();
 
         // ReSharper disable once UnusedMember.Local
         private static void Main()
         {
-            // Configure logging providers
-            ConfigureLogging();
-            
+            // Init logging
+            XmlConfigurator.Configure();
+
             // Configure quit events
             Console.CancelKeyPress += (sender, eArgs) => {
                 QuitEvent.Set();
@@ -41,14 +42,9 @@ namespace CryptoBot
             StopApp();
         }
 
-        private static void ConfigureLogging()
-        {
-            ApplicationLogging.LoggerFactory.AddConsole(LogLevel.Debug, true);
-        }
-
         private static void StartApp()
         {
-            Logger.LogInformation("CryptoBot starting...");
+            Logger.Info("CryptoBot starting...");
             
             // Create ticker services
             var poloniexTickerService = ServiceHandler.Start(new PoloniexTickerService());
@@ -73,7 +69,7 @@ namespace CryptoBot
             }
             catch (BotHandlerException e)
             {
-                Logger.LogCritical("BotHandler could not be started", e);
+                Logger.Fatal("BotHandler could not be started", e);
             }
         }
 
@@ -82,7 +78,7 @@ namespace CryptoBot
             // Stop all started services
             ServiceHandler.StopAll();
 
-            Logger.LogInformation("CryptoBot stopped");
+            Logger.Info("CryptoBot stopped");
         }
     }
 }

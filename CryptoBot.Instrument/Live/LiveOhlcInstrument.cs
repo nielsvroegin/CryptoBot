@@ -10,13 +10,13 @@ using CryptoBot.Utils.General;
 using CryptoBot.Utils.Assertions;
 using CryptoBot.Utils.Helpers;
 using CryptoBot.Utils.Logging;
-using Microsoft.Extensions.Logging;
+using log4net;
 
 namespace CryptoBot.Instrument.Live
 {
     internal class LiveOhlcInstrument
     {
-        private static readonly ILogger Logger = ApplicationLogging.CreateLogger<LiveOhlcInstrument>();
+        private static readonly ILog Logger = ApplicationLogging.CreateLogger<LiveOhlcInstrument>();
         private static readonly SemaphoreSlim UpdateSemaphore = new SemaphoreSlim(1, 1);
 
         public Exchange Exchange { get; }
@@ -88,7 +88,7 @@ namespace CryptoBot.Instrument.Live
             }
             catch (ExchangeApiException e)
             {
-                Logger.LogWarning($"Error loading historic data for OhlcSeries {ohlcSeries.TimeSpanSeconds}.", e);
+                Logger.Warn($"Error loading historic data for OhlcSeries {ohlcSeries.TimeSpanSeconds}.", e);
             }
             finally
             {

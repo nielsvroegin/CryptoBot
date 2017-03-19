@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using log4net;
 
 namespace CryptoBot.Utils.Logging
 {
@@ -8,16 +8,10 @@ namespace CryptoBot.Utils.Logging
     public static class ApplicationLogging
     {
         /// <summary>
-        /// The factory for creating logggers
-        /// </summary>
-        public static ILoggerFactory LoggerFactory { get; } = new LoggerFactory();
-
-        /// <summary>
         /// Helper method to create logger
         /// </summary>
         /// <typeparam name="T">Logger target class</typeparam>
         /// <returns>The created logger</returns>
-        public static ILogger CreateLogger<T>() =>
-          LoggerFactory.CreateLogger<T>();
+        public static ILog CreateLogger<T>() => LogManager.GetLogger(typeof(T));
     }
 }

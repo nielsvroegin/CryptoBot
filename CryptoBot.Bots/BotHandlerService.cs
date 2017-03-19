@@ -9,7 +9,7 @@ using CryptoBot.Utils.General;
 using CryptoBot.Utils.Logging;
 using CryptoBot.Utils.Assertions;
 using CryptoBot.Utils.ServiceHandler;
-using Microsoft.Extensions.Logging;
+using log4net;
 
 namespace CryptoBot.Bots
 {
@@ -18,7 +18,7 @@ namespace CryptoBot.Bots
     /// </summary>
     public sealed class BotHandlerService : IManagedService, ITickerSubscriber
     {
-        private static readonly ILogger Logger = ApplicationLogging.CreateLogger<BotHandlerService>();
+        private static readonly ILog Logger = ApplicationLogging.CreateLogger<BotHandlerService>();
 
         private readonly IInstrumentManager _instrumentManager;
         private readonly IList<IBotStrategy> _botStrategies = new List<IBotStrategy>();
@@ -69,7 +69,7 @@ namespace CryptoBot.Bots
                 tickerService.Subscribe(this);
             }
 
-            Logger.LogInformation("BotHandlerService has been started");
+            Logger.Info("BotHandlerService has been started");
         }
 
         /// <inheritdoc />
@@ -87,7 +87,7 @@ namespace CryptoBot.Bots
                 tickerService.Unsubscribe(this);
             }
 
-            Logger.LogInformation("BotHandlerService has been stopped");
+            Logger.Info("BotHandlerService has been stopped");
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace CryptoBot.Bots
             }
             catch (Exception e)
             {
-                Logger.LogError("Uncaught exception during tick processing.", e);
+                Logger.Error("Uncaught exception during tick processing.", e);
             }
         }
 
