@@ -34,7 +34,8 @@ namespace CryptoBot.Bots.Strategies.Cowabunga
         /// <inheritdoc />
         public void HandleTick(TickData tickData, OhlcInstrument instrument, IMarketApi marketApi)
         {
-            Logger.Info($"Cowabunga tickdata: {tickData}");
+            double ema = instrument.OhlcSeries.Find(s => s.TimeSpanSeconds == 900).Ema(9);
+            Logger.Info($"Cowabunga ema: {ema}");
         }
     }
 }
