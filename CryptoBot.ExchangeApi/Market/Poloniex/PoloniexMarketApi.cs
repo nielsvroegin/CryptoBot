@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CryptoBot.Utils.Assertions;
 using CryptoBot.Utils.General;
 using CryptoBot.Utils.Helpers;
+using Newtonsoft.Json.Linq;
 
 
 namespace CryptoBot.ExchangeApi.Market.Poloniex
@@ -50,6 +51,38 @@ namespace CryptoBot.ExchangeApi.Market.Poloniex
             }
 
             return new OhlcSeries(ohlcTimeSpanSeconds, ohlcItems.ToImmutable());
+        }
+
+        public async Task<IList<CurrencyPair>> ReadCurrencyPairs()
+        {
+            // Load response
+            const string command = "return24hVolume";
+            var response = await _dataRetriever.PerformRequest(ServerUrl, command, null);
+            
+            // Convert JSON to JToken
+            JToken data = JToken.Parse(response);
+
+            // Extract CurrencyPairs from JToken
+            var currencyPairs = new List<CurrencyPair>();
+            foreach (var token in data)
+            {
+                var property = token as JProperty;
+
+                // Continue when not a property or name doesn't contain the currency seperator
+                if (ReferenceEquals(property, null) || !property.Name.Contains("_"))
+                {
+                    continue;
+                }
+
+                // Convert name to currency pair
+                var currencyPair = CurrencyPair.Parse(property.Name);
+                if (!ReferenceEquals(currencyPair, null))
+                {
+                    currencyPairs.Add(currencyPair);
+                }
+            }
+
+            return currencyPairs;
         }
     }
 }

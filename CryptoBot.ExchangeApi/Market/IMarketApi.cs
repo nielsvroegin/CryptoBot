@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CryptoBot.Utils.General;
 
@@ -21,5 +22,11 @@ namespace CryptoBot.ExchangeApi.Market
         /// <returns>The loaded ohlc series</returns>
         /// <exception cref="ExchangeApiException">ExchangeApiException thrown when any error occurred during request</exception>
         Task<OhlcSeries> ReadOhlcSeries(CurrencyPair currencyPair, DateTime startTime, DateTime endTime, int ohlcTimeSpanSeconds);
+
+        /// <summary>
+        /// Read the supported currency pairs of exchange
+        /// </summary>
+        /// <returns>List of supported currency pairs</returns>
+        Task<IList<CurrencyPair>> ReadCurrencyPairs();
     }
 }

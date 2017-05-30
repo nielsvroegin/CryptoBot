@@ -14,6 +14,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot.Bots", "CryptoBot
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot", "CryptoBot\CryptoBot.csproj", "{244F1A97-85B2-4276-A0B2-214F91D3CA86}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HistoricTradesDownloader", "HistoricTradesDownloader\HistoricTradesDownloader.csproj", "{7EDA585E-93A8-43C0-9991-36EDDF3AE65C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoBot.Utils.UnitTests", "CryptoBot.Utils.UnitTests\CryptoBot.Utils.UnitTests.csproj", "{217A9DF6-3065-4D41-A2DB-ABF56A9EBCCC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +48,14 @@ Global
 		{244F1A97-85B2-4276-A0B2-214F91D3CA86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{244F1A97-85B2-4276-A0B2-214F91D3CA86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{244F1A97-85B2-4276-A0B2-214F91D3CA86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EDA585E-93A8-43C0-9991-36EDDF3AE65C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EDA585E-93A8-43C0-9991-36EDDF3AE65C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EDA585E-93A8-43C0-9991-36EDDF3AE65C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EDA585E-93A8-43C0-9991-36EDDF3AE65C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{217A9DF6-3065-4D41-A2DB-ABF56A9EBCCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{217A9DF6-3065-4D41-A2DB-ABF56A9EBCCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{217A9DF6-3065-4D41-A2DB-ABF56A9EBCCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{217A9DF6-3065-4D41-A2DB-ABF56A9EBCCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

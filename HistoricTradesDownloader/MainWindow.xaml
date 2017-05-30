@@ -1,0 +1,43 @@
+﻿<Window x:Class="HistoricTradesDownloader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:HistoricTradesDownloader.ViewModels"
+        xmlns:converters="clr-namespace:HistoricTradesDownloader.ViewModels.Converters"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="Trades Downloader" Height="235" Width="525" ResizeMode="NoResize">
+    <Window.Resources>
+        <converters:AnyValuesConverter x:Key="AnyValuesConverter" />
+    </Window.Resources>
+    
+    <Grid Margin="10" d:DataContext="{d:DesignInstance vm:DownloaderViewModel}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+        <Label Grid.Row="0" Grid.Column="0">Exchange:</Label>
+        <ComboBox ItemsSource="{Binding Path=Exchanges}" SelectedItem="{Binding SelectedExchange}" Grid.Row="0" Grid.Column="1" Margin="0,0,0,10" />
+        <Label Grid.Row="1" Grid.Column="0">Currency Pair:</Label>
+        <ComboBox IsEnabled="{Binding Path=CurrencyPairs, Converter={StaticResource AnyValuesConverter}}" ItemsSource="{Binding Path=CurrencyPairs}" Grid.Row="1" Grid.Column="1" Margin="0,0,0,10" />
+        <Label Grid.Row="2" Grid.Column="0">Start Time:</Label>
+        <xctk:DateTimePicker Grid.Row="2" Grid.Column="1" Margin="0,0,0,10" />
+        <Label Grid.Row="3" Grid.Column="0">End Time:</Label>
+        <xctk:DateTimePicker Grid.Row="3" Grid.Column="1" Margin="0,0,0,10" />
+        <Label Grid.Row="4" Grid.Column="0">CSV File:</Label>
+        <DockPanel LastChildFill="true" Grid.Row="4" Grid.Column="1" Margin="0,0,0,10">
+            <Button DockPanel.Dock="Right" Content="Select File"/>
+            <TextBox Width="Auto" Margin="0,0,5,0" />
+        </DockPanel>
+        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Content="Start Download"></Button>
+    </Grid>
+</Window>
