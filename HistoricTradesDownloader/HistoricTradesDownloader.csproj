@@ -76,6 +76,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ObservableObject.cs" />
+    <Compile Include="ViewModels\Commands\RelayCommand.cs" />
     <Compile Include="ViewModels\Converters\AnyValuesConverter.cs" />
     <Compile Include="ViewModels\DownloaderViewModel.cs" />
     <Compile Include="Helpers\TradesDownloader.cs" />

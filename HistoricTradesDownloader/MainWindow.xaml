@@ -28,16 +28,16 @@
         <Label Grid.Row="0" Grid.Column="0">Exchange:</Label>
         <ComboBox ItemsSource="{Binding Path=Exchanges}" SelectedItem="{Binding SelectedExchange}" Grid.Row="0" Grid.Column="1" Margin="0,0,0,10" />
         <Label Grid.Row="1" Grid.Column="0">Currency Pair:</Label>
-        <ComboBox IsEnabled="{Binding Path=CurrencyPairs, Converter={StaticResource AnyValuesConverter}}" ItemsSource="{Binding Path=CurrencyPairs}" Grid.Row="1" Grid.Column="1" Margin="0,0,0,10" />
+        <ComboBox IsEnabled="{Binding Path=CurrencyPairs, Converter={StaticResource AnyValuesConverter}}" ItemsSource="{Binding Path=CurrencyPairs}" SelectedItem="{Binding SelectedCurrencyPair}" Grid.Row="1" Grid.Column="1" Margin="0,0,0,10" />
         <Label Grid.Row="2" Grid.Column="0">Start Time:</Label>
-        <xctk:DateTimePicker Grid.Row="2" Grid.Column="1" Margin="0,0,0,10" />
+        <xctk:DateTimePicker Value="{Binding Path=StartTime}" Grid.Row="2" Grid.Column="1" Margin="0,0,0,10" />
         <Label Grid.Row="3" Grid.Column="0">End Time:</Label>
-        <xctk:DateTimePicker Grid.Row="3" Grid.Column="1" Margin="0,0,0,10" />
+        <xctk:DateTimePicker Value="{Binding Path=EndTime}" Grid.Row="3" Grid.Column="1" Margin="0,0,0,10" />
         <Label Grid.Row="4" Grid.Column="0">CSV File:</Label>
         <DockPanel LastChildFill="true" Grid.Row="4" Grid.Column="1" Margin="0,0,0,10">
-            <Button DockPanel.Dock="Right" Content="Select File"/>
-            <TextBox Width="Auto" Margin="0,0,5,0" />
+            <Button Command="{Binding Path=ChooseCsvLocationCmd}" DockPanel.Dock="Right" Content="Select File"/>
+            <TextBox Text="{Binding Path=CsvPath}" Width="Auto" Margin="0,0,5,0" />
         </DockPanel>
-        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Content="Start Download"></Button>
+        <Button Command="{Binding Path=StartDownloadCmd}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Content="Start Download"></Button>
     </Grid>
 </Window>
