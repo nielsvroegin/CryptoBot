@@ -55,6 +55,7 @@
     <Compile Include="General\Exchange.cs" />
     <Compile Include="General\OhlcItem.cs" />
     <Compile Include="General\OhlcSeries.cs" />
+    <Compile Include="General\Trade.cs" />
     <Compile Include="General\TickData.cs" />
     <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="Logging\ApplicationLogging.cs" />

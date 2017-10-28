@@ -84,5 +84,28 @@ namespace CryptoBot.ExchangeApi.Market.Poloniex
 
             return currencyPairs;
         }
+
+        public async Task<IList<Trade>> ReadHistoricTrades(CurrencyPair currencyPair, DateTime startTime, DateTime endTime)
+        {
+            // Load response
+            const string command = "returnTradeHistory";
+            var parameters = new Dictionary<string, string>
+            {
+                // TODO: Map global currency pair to poloniex currency pair instead of expecting these to be equal
+                {"currencyPair", currencyPair.ToString()},
+                {"start", DateTimeHelper.ToUnixTime(startTime).ToString()},
+                {"end", DateTimeHelper.ToUnixTime(endTime).ToString()}
+            };
+            var historicTradesData = await _dataRetriever.PerformRequest<IList<MarketTrade>>(ServerUrl, command, parameters);
+            
+            var historicTrades = new List<Trade>();
+            foreach (var historicTrade in historicTradesData.Reverse())
+            {
+                var trade = new Trade(historicTrade.Date, historicTrade.Type, historicTrade.Rate, historicTrade.Amount, historicTrade.Total);
+                historicTrades.Add(trade);
+            }
+
+            return historicTrades;
+        }
     }
 }

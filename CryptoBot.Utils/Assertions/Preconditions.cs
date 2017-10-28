@@ -8,7 +8,7 @@ namespace CryptoBot.Utils.Assertions
     public static class Preconditions
     {
         /// <summary>
-        /// Check object not null or throw ar
+        /// Check object not null or throw NullReferenceException
         /// </summary>
         public static T CheckNotNull<T>(T obj)
         {

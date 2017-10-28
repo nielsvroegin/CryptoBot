@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using CryptoBot.ExchangeApi.Market;
 using CryptoBot.ExchangeApi.Market.Poloniex;
 using CryptoBot.Utils.General;
-using HistoricTradesDownloader;
 using HistoricTradesDownloader.Helpers;
 using System.Windows.Input;
+using CryptoBot.Utils.Assertions;
+using CsvHelper;
+using CsvHelper.Configuration;
+using CsvHelper.TypeConversion;
 using HistoricTradesDownloader.ViewModels.Commands;
 using Microsoft.Win32;
 
@@ -18,14 +23,28 @@ namespace HistoricTradesDownloader.ViewModels
     {
         private readonly TradesDownloader _tradesDownloader;
 
-        private Exchange? _selectedExchange;        
+        private Exchange? _selectedExchange;
+        private int _downloadProgress;
+        private bool _isNotDownloading;
+        private string _csvPath;
+        private IList<CurrencyPair> _currencyPairs = new List<CurrencyPair>();
 
-        public IList<Exchange> Exchanges { get; private set; }
-        public IList<CurrencyPair> CurrencyPairs { get; private set; }
+        public IList<Exchange> Exchanges { get; }
+
+        public IList<CurrencyPair> CurrencyPairs
+        {
+            get => _currencyPairs;
+            private set
+            {
+                _currencyPairs = value;
+                OnPropertyChanged("CurrencyPairs");
+                OnPropertyChanged("AllowCurrencyPairSelection");
+            }
+        }
 
         public Exchange? SelectedExchange
         {
-            get { return _selectedExchange; }
+            get => _selectedExchange;
             set
             {
                 _selectedExchange = value;
@@ -42,7 +61,38 @@ namespace HistoricTradesDownloader.ViewModels
 
         public DateTime EndTime { get; set; }
 
-        public String CsvPath { get; set; }
+        public string CsvPath
+        {
+            get => _csvPath;
+            private set
+            {
+                _csvPath = value;
+                OnPropertyChanged("CsvPath");
+            }
+        }
+
+        public int DownloadProgress
+        {
+            get => _downloadProgress;
+            private set
+            {
+                _downloadProgress = value;
+                OnPropertyChanged("DownloadProgress");
+            }
+        }
+
+        public bool IsNotDownloading
+        {
+            get => _isNotDownloading;
+            private set
+            {
+                _isNotDownloading = value;
+                OnPropertyChanged("IsNotDownloading");
+                OnPropertyChanged("AllowCurrencyPairSelection");
+            }
+        }
+
+        public bool AllowCurrencyPairSelection => IsNotDownloading && CurrencyPairs.Any();
 
         public ICommand ChooseCsvLocationCmd { get; }
 
@@ -58,8 +108,9 @@ namespace HistoricTradesDownloader.ViewModels
             _tradesDownloader = new TradesDownloader(marketApis);
 
             // Set properties
+            IsNotDownloading = true;
             Exchanges = _tradesDownloader.GetExchanges();
-            StartTime = DateTime.Now.AddMonths(-1);
+            StartTime = DateTime.Now.AddHours(-1);
             EndTime = DateTime.Now;
 
             // Set commands
@@ -70,13 +121,11 @@ namespace HistoricTradesDownloader.ViewModels
         private async void LoadCurrencyPairs(Exchange exchange)
         {
             CurrencyPairs = await Task.Run(() => _tradesDownloader.LoadCurrencyPairs(exchange));
-
-            OnPropertyChanged("CurrencyPairs");
         }
 
         private bool CanDownload()
         {
-            return SelectedExchange != null && SelectedCurrencyPair != null && StartTime != null && EndTime != null && !String.IsNullOrEmpty(CsvPath);
+            return SelectedExchange != null && SelectedCurrencyPair != null && StartTime < EndTime && !String.IsNullOrEmpty(CsvPath) && IsNotDownloading;
         }
         
         private void ChooseCsvLocation()
@@ -88,14 +137,44 @@ namespace HistoricTradesDownloader.ViewModels
             if (result.HasValue && result.Value)
             {
                 CsvPath = saveFileDialog.FileName;
-                OnPropertyChanged("CsvPath");
             }
-
         }
 
-        private void StartDownload()
+        private async void StartDownload()
         {
+            Preconditions.CheckNotNull(SelectedExchange);
+            Preconditions.CheckNotNull(SelectedCurrencyPair);
+            Preconditions.CheckNotNull(StartTime);
+            Preconditions.CheckNotNull(EndTime);
+            Preconditions.CheckNotNull(CsvPath);
+            
+            try
+            {
+                IsNotDownloading = false;
+                DownloadProgress = 0;
 
+                // Download the trades
+                await _tradesDownloader.DownloadHistoricTrades(
+                    SelectedExchange.GetValueOrDefault(),
+                    SelectedCurrencyPair,
+                    StartTime,
+                    EndTime,
+                    CsvPath,
+                    progress => { DownloadProgress = progress; }
+                );
+            }
+            catch (DirectoryNotFoundException)
+            {
+                MessageBox.Show("The directory to save the CSV could not be found");
+            }
+            finally
+            {
+                DownloadProgress = 0;
+                IsNotDownloading = true;
+            }
+
+            // Notify user download completed
+            MessageBox.Show("The historic trades have been downloaded and stored in the CSV file.", "Download completed!");
         }
     }
 }

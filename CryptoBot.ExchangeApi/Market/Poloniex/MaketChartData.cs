@@ -10,7 +10,7 @@ namespace CryptoBot.ExchangeApi.Market.Poloniex
         // ReSharper disable once UnusedMember.Local
         private long TimeInternal
         {
-            set { Time = DateTimeHelper.ToDateTime(value); }
+            set => Time = DateTimeHelper.ToDateTime(value);
         }
         public DateTime Time { get; set; }
 

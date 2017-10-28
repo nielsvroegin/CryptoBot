@@ -57,6 +57,7 @@
     <Compile Include="Market\Poloniex\DataRetriever.cs" />
     <Compile Include="Market\Poloniex\IDataRetriever.cs" />
     <Compile Include="Market\Poloniex\MaketChartData.cs" />
+    <Compile Include="Market\Poloniex\MarketTrade.cs" />
     <Compile Include="Market\Poloniex\PoloniexMarketApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

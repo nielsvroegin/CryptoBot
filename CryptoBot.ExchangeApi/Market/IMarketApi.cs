@@ -28,5 +28,14 @@ namespace CryptoBot.ExchangeApi.Market
         /// </summary>
         /// <returns>List of supported currency pairs</returns>
         Task<IList<CurrencyPair>> ReadCurrencyPairs();
+
+        /// <summary>
+        /// Read historic trades on exchange
+        /// </summary>
+        /// <param name="currencyPair">Currency pair to load historic trades for</param>
+        /// <param name="startTime">Start time of historic trades</param>
+        /// <param name="endTime">End time of historic traders</param>
+        /// <returns>List of historic trades, ordered from old to new</returns>
+        Task<IList<Trade>> ReadHistoricTrades(CurrencyPair currencyPair, DateTime startTime, DateTime endTime);
     }
 }

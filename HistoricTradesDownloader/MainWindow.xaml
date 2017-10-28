@@ -7,7 +7,7 @@
         xmlns:converters="clr-namespace:HistoricTradesDownloader.ViewModels.Converters"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="Trades Downloader" Height="235" Width="525" ResizeMode="NoResize">
+        Title="Trades Downloader" Height="270" Width="525" ResizeMode="NoResize">
     <Window.Resources>
         <converters:AnyValuesConverter x:Key="AnyValuesConverter" />
     </Window.Resources>
@@ -23,21 +23,23 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-        <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="0">Exchange:</Label>
-        <ComboBox ItemsSource="{Binding Path=Exchanges}" SelectedItem="{Binding SelectedExchange}" Grid.Row="0" Grid.Column="1" Margin="0,0,0,10" />
+        <ComboBox ItemsSource="{Binding Path=Exchanges}" SelectedItem="{Binding SelectedExchange}" IsEnabled="{Binding Path=IsNotDownloading}" Grid.Row="0" Grid.Column="1" Margin="0,0,0,10" />
         <Label Grid.Row="1" Grid.Column="0">Currency Pair:</Label>
-        <ComboBox IsEnabled="{Binding Path=CurrencyPairs, Converter={StaticResource AnyValuesConverter}}" ItemsSource="{Binding Path=CurrencyPairs}" SelectedItem="{Binding SelectedCurrencyPair}" Grid.Row="1" Grid.Column="1" Margin="0,0,0,10" />
+        <ComboBox IsEnabled="{Binding Path=AllowCurrencyPairSelection}" ItemsSource="{Binding Path=CurrencyPairs}" SelectedItem="{Binding SelectedCurrencyPair}" Grid.Row="1" Grid.Column="1" Margin="0,0,0,10" />
         <Label Grid.Row="2" Grid.Column="0">Start Time:</Label>
-        <xctk:DateTimePicker Value="{Binding Path=StartTime}" Grid.Row="2" Grid.Column="1" Margin="0,0,0,10" />
+        <xctk:DateTimePicker Value="{Binding Path=StartTime}" Grid.Row="2" Grid.Column="1" Margin="0,0,0,10" IsEnabled="{Binding Path=IsNotDownloading}" />
         <Label Grid.Row="3" Grid.Column="0">End Time:</Label>
-        <xctk:DateTimePicker Value="{Binding Path=EndTime}" Grid.Row="3" Grid.Column="1" Margin="0,0,0,10" />
+        <xctk:DateTimePicker Value="{Binding Path=EndTime}" Grid.Row="3" Grid.Column="1" Margin="0,0,0,10" IsEnabled="{Binding Path=IsNotDownloading}" />
         <Label Grid.Row="4" Grid.Column="0">CSV File:</Label>
         <DockPanel LastChildFill="true" Grid.Row="4" Grid.Column="1" Margin="0,0,0,10">
-            <Button Command="{Binding Path=ChooseCsvLocationCmd}" DockPanel.Dock="Right" Content="Select File"/>
-            <TextBox Text="{Binding Path=CsvPath}" Width="Auto" Margin="0,0,5,0" />
+            <Button Command="{Binding Path=ChooseCsvLocationCmd}" DockPanel.Dock="Right" Content="Select File" IsEnabled="{Binding Path=IsNotDownloading}"/>
+            <TextBox Text="{Binding Path=CsvPath, Mode=OneWay}" Width="Auto" Margin="0,0,5,0" IsEnabled="false" />
         </DockPanel>
-        <Button Command="{Binding Path=StartDownloadCmd}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Content="Start Download"></Button>
+        <Button Command="{Binding Path=StartDownloadCmd}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Content="Start Download" Margin="0,0,0,10" />
+        <ProgressBar Minimum="0" Maximum="100" Value="{Binding Path=DownloadProgress, Mode=OneWay}" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Height="25" />
     </Grid>
 </Window>
