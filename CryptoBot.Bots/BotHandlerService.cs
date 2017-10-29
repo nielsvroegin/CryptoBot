@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using CryptoBot.ExchangeApi.Market;
+using CryptoBot.ExchangeMonitors;
 using CryptoBot.Instrument;
-using CryptoBot.TickerServices;
 using CryptoBot.Utils.General;
 using CryptoBot.Utils.Logging;
 using CryptoBot.Utils.Assertions;
@@ -17,13 +16,13 @@ namespace CryptoBot.Bots
     /// <summary>
     /// Service that runs the registered strategies and provides information to these services
     /// </summary>
-    public sealed class BotHandlerService : IManagedService, ITickerSubscriber
+    public sealed class BotHandlerService : IManagedService, IExchangeMonitorSubscriber
     {
         private static readonly ILog Logger = ApplicationLogging.CreateLogger<BotHandlerService>();
 
         private readonly IInstrumentManager _instrumentManager;
         private readonly IList<IBotStrategy> _botStrategies = new List<IBotStrategy>();
-        private readonly IList<ITickerService> _tickerServices = new List<ITickerService>();
+        private readonly IList<IExchangeMonitor> _exchangeMonitors = new List<IExchangeMonitor>();
         private readonly IList<IMarketApi> _marketApis = new List<IMarketApi>();
 
         /// <summary>
@@ -43,8 +42,8 @@ namespace CryptoBot.Bots
             // Verify al dependencies registered for bot strategies and init the startegy
             foreach (var botStrategy in _botStrategies)
             {
-                // Verify a ticker service for this exchange has been registered
-                if (_tickerServices.All(t => t.Exchange != botStrategy.Exchange))
+                // Verify an exchange monitor for this exchange has been registered
+                if (_exchangeMonitors.All(t => t.Exchange != botStrategy.Exchange))
                 {
                     throw new BotHandlerException($"No ticker service registered for exchange '{botStrategy.Exchange}', which is used by BotStrategy '{nameof(botStrategy)}'.");
                 }
@@ -64,10 +63,10 @@ namespace CryptoBot.Bots
                 botStrategy.Init(marketApi);
             }
 
-            // Subscribe on tickers
-            foreach (var tickerService in _tickerServices)
+            // Subscribe on exchange monitors
+            foreach (var exchangeMonitor in _exchangeMonitors)
             {
-                tickerService.Subscribe(this);
+                exchangeMonitor.Subscribe(this);
             }
 
             Logger.Info("BotHandlerService has been started");
@@ -82,10 +81,10 @@ namespace CryptoBot.Bots
                 botStrategy.Deinit();
             }
 
-            // Unsubscribe from tickers
-            foreach (var tickerService in _tickerServices)
+            // Unsubscribe from exchange monitors
+            foreach (var exchangeMonitor in _exchangeMonitors)
             {
-                tickerService.Unsubscribe(this);
+                exchangeMonitor.Unsubscribe(this);
             }
 
             Logger.Info("BotHandlerService has been stopped");
@@ -153,13 +152,13 @@ namespace CryptoBot.Bots
             }
 
             /// <summary>
-            /// Register a ticker service to use in BotHandlerService
+            /// Register an exchange monitor to use in BotHandlerService
             /// </summary>
-            public Builder RegisterTickerService(ITickerService tickerService)
+            public Builder RegisterExchangeMonitor(IExchangeMonitor exchangeMonitor)
             {
-                Preconditions.CheckNotNull(tickerService);
+                Preconditions.CheckNotNull(exchangeMonitor);
 
-                _botHandlerService._tickerServices.Add(tickerService);
+                _botHandlerService._exchangeMonitors.Add(exchangeMonitor);
                 return this;
             }
 

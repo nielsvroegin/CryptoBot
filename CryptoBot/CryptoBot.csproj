@@ -65,9 +65,9 @@
       <Project>{d2c6d255-dabc-4ccd-9d1b-a93d1c0ad176}</Project>
       <Name>CryptoBot.Instrument</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CryptoBot.TickerServices\CryptoBot.TickerServices.csproj">
+    <ProjectReference Include="..\CryptoBot.ExchangeMonitors\CryptoBot.ExchangeMonitors.csproj">
       <Project>{1a70b806-4912-44ee-bacd-c0acfb14025f}</Project>
-      <Name>CryptoBot.TickerServices</Name>
+      <Name>CryptoBot.ExchangeMonitors</Name>
     </ProjectReference>
     <ProjectReference Include="..\CryptoBot.Utils\CryptoBot.Utils.csproj">
       <Project>{c55c243d-a6da-49f8-9075-ff8e4ee09d1c}</Project>

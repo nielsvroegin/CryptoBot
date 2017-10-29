@@ -3,8 +3,8 @@ using System.Threading;
 using CryptoBot.Bots;
 using CryptoBot.Bots.Strategies.Cowabunga;
 using CryptoBot.ExchangeApi.Market.Poloniex;
+using CryptoBot.ExchangeMonitors.Services.Poloniex;
 using CryptoBot.Instrument;
-using CryptoBot.TickerServices.Services.Poloniex;
 using CryptoBot.Utils.Logging;
 using CryptoBot.Utils.ServiceHandler;
 using log4net;
@@ -47,7 +47,7 @@ namespace CryptoBot
             Logger.Info("CryptoBot starting...");
             
             // Create ticker services
-            var poloniexTickerService = ServiceHandler.Start(new PoloniexTickerService());
+            var poloniexTickerService = ServiceHandler.Start(new PoloniexExchangeMonitor());
 
             // Create market apis
             var poloniexMarketApi = new PoloniexMarketApi();
@@ -57,7 +57,7 @@ namespace CryptoBot
 
             // Build BotHandlerService
             var botHandlerService = new BotHandlerService.Builder(new InstrumentManager())
-                .RegisterTickerService(poloniexTickerService)
+                .RegisterExchangeMonitor(poloniexTickerService)
                 .RegisterMarketApi(poloniexMarketApi)
                 .RegisterBotStrategy(cowabungaStrategy)
                 .Build();
