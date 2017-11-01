@@ -97,6 +97,8 @@
     <Compile Include="IExchangeMonitorSubscriber.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Poloniex\PoloniexExchangeMonitor.cs" />
+    <Compile Include="Services\Poloniex\Subscription.cs" />
+    <Compile Include="SubscriptionCategory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

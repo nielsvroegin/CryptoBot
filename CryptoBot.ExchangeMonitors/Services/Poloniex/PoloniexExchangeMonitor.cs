@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CryptoBot.Utils.Assertions;
 using CryptoBot.Utils.General;
 using CryptoBot.Utils.Helpers;
@@ -25,10 +26,10 @@ namespace CryptoBot.ExchangeMonitors.Services.Poloniex
         private const string ServerAddress = "wss://api.poloniex.com";
         private const string TickerTopic = "ticker";
 
-        private readonly IList<IExchangeMonitorSubscriber> _subscribers = new List<IExchangeMonitorSubscriber>();
+        private readonly IList<Subscription> _subscriptions = new List<Subscription>();
         private readonly IWampChannelFactory _wampChannelFactory;
 
-        private IDisposable _subscription;
+        private IDisposable _channelSubscription;
         private IWampChannel _channel;
 
         /// <summary>
@@ -60,10 +61,7 @@ namespace CryptoBot.ExchangeMonitors.Services.Poloniex
             _channel.RealmProxy.Monitor.ConnectionEstablished += OnConnectionEstablised;
             _channel.RealmProxy.Monitor.ConnectionError += OnConnectionError;
             _channel.Open().Wait(5000);
-
-            // Subscribe to ticker topic
             
-
             Logger.Info("Poloniex ticker service has been started");
         }
 
@@ -71,33 +69,44 @@ namespace CryptoBot.ExchangeMonitors.Services.Poloniex
         public void Stop()
         {
             // Stop subscription and close channel
-            _subscription?.Dispose();
+            _channelSubscription?.Dispose();
             _channel.Close();
 
             Logger.Info("Poloniex ticker service has been stopped");
         }
 
         /// <inheritdoc />
-        public void Subscribe(IExchangeMonitorSubscriber subscriber)
+        public void Subscribe(SubscriptionCategory kind, CurrencyPair currencyPair, IExchangeMonitorSubscriber subscriber)
         {
+            Preconditions.CheckNotNull(kind);
+            Preconditions.CheckNotNull(currencyPair);
             Preconditions.CheckNotNull(subscriber);
 
             // Subscribe subscriber
-            lock (_subscribers)
+            lock (_subscriptions)
             {
-                _subscribers.Add(subscriber);
+                if (FindSubscription(kind, currencyPair, subscriber) == null)
+                {
+                    _subscriptions.Add(new Subscription(currencyPair, kind, subscriber));
+                }
             }
         }
 
         /// <inheritdoc />
-        public void Unsubscribe(IExchangeMonitorSubscriber subscriber)
+        public void Unsubscribe(SubscriptionCategory kind, CurrencyPair currencyPair, IExchangeMonitorSubscriber subscriber)
         {
+            Preconditions.CheckNotNull(kind);
+            Preconditions.CheckNotNull(currencyPair);
             Preconditions.CheckNotNull(subscriber);
 
             // Unsubscribe subscriber
-            lock (_subscribers)
+            lock (_subscriptions)
             {
-                _subscribers.Remove(subscriber);
+                var subscription = FindSubscription(kind, currencyPair, subscriber);
+                if (subscription != null)
+                {
+                    _subscriptions.Remove(subscription);
+                }
             }
         }
 
@@ -106,7 +115,7 @@ namespace CryptoBot.ExchangeMonitors.Services.Poloniex
             Logger.Debug("Connection established to Poloniex exchange monitor");
 
             // Subscribe to ticker topic
-            _subscription = _channel.RealmProxy.Services.GetSubject(TickerTopic).Subscribe(x => ProcessTick(x.Arguments));
+            _channelSubscription = _channel.RealmProxy.Services.GetSubject(TickerTopic).Subscribe(x => ProcessTick(x.Arguments));
         }
 
         private void OnConnectionError(object sender, WampConnectionErrorEventArgs e)
@@ -153,12 +162,21 @@ namespace CryptoBot.ExchangeMonitors.Services.Poloniex
             Logger.Debug($"Received new tick: {tickData}");
 
             // Notify subscribers
-            lock (_subscribers)
+            lock (_subscriptions)
             {
-                foreach (var subscriber in _subscribers)
+                foreach (var subscription in _subscriptions)
                 {
-                    subscriber.OnTick(Exchange, tickData);
+                    subscription.Subscriber.OnTick(Exchange, tickData);
                 }
+            }
+        }
+
+        private Subscription FindSubscription(SubscriptionCategory kind, CurrencyPair currencyPair, IExchangeMonitorSubscriber subscriber)
+        {
+            lock (_subscriptions)
+            {
+                return _subscriptions.FirstOrDefault(s =>
+                    s.Kind == kind && s.CurrencyPair.Equals(currencyPair) && s.Subscriber == subscriber);
             }
         }
     }
