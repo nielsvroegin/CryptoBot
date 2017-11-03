@@ -98,7 +98,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Poloniex\PoloniexExchangeMonitor.cs" />
     <Compile Include="Services\Poloniex\Subscription.cs" />
-    <Compile Include="SubscriptionCategory.cs" />
+    <Compile Include="Services\Poloniex\TickConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

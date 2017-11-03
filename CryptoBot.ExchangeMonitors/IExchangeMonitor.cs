@@ -15,17 +15,15 @@ namespace CryptoBot.ExchangeMonitors
         /// <summary>
         /// Subscribe on monitor for updates
         /// </summary>
-        /// <param name="kind">Kind of subscription</param>
         /// <param name="currencyPair">The currency pair</param>
         /// <param name="subscriber">The subscriber</param>
-        void Subscribe(SubscriptionCategory kind, CurrencyPair currencyPair, IExchangeMonitorSubscriber subscriber);
+        void Subscribe(CurrencyPair currencyPair, IExchangeMonitorSubscriber subscriber);
 
         /// <summary>
         /// Unsubscribe from monitor for updates
         /// </summary>
-        /// <param name="kind">Kind of subscription</param>
         /// <param name="currencyPair">The currency pair</param>
         /// <param name="subscriber">The subscriber</param>
-        void Unsubscribe(SubscriptionCategory kind, CurrencyPair currencyPair, IExchangeMonitorSubscriber subscriber);
+        void Unsubscribe(CurrencyPair currencyPair, IExchangeMonitorSubscriber subscriber);
     }
 }

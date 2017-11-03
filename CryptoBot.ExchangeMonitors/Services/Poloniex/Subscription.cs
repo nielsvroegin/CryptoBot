@@ -11,11 +11,6 @@ namespace CryptoBot.ExchangeMonitors.Services.Poloniex
         public CurrencyPair CurrencyPair { get; }
 
         /// <summary>
-        /// Kind of subscription
-        /// </summary>
-        public SubscriptionCategory Kind { get; }
-
-        /// <summary>
         /// The subscriber
         /// </summary>
         public IExchangeMonitorSubscriber Subscriber { get; }
@@ -23,10 +18,9 @@ namespace CryptoBot.ExchangeMonitors.Services.Poloniex
         /// <summary>
         /// Constructor
         /// </summary>
-        public Subscription(CurrencyPair currencyPair, SubscriptionCategory kind, IExchangeMonitorSubscriber subscriber)
+        public Subscription(CurrencyPair currencyPair, IExchangeMonitorSubscriber subscriber)
         {
             CurrencyPair = Preconditions.CheckNotNull(currencyPair);
-            Kind = Preconditions.CheckNotNull(kind);
             Subscriber = Preconditions.CheckNotNull(subscriber);
         }
     }

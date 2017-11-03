@@ -66,7 +66,10 @@ namespace CryptoBot.Bots
             // Subscribe on exchange monitors
             foreach (var exchangeMonitor in _exchangeMonitors)
             {
-                exchangeMonitor.Subscribe(this);
+                foreach (var currencyPair in _botStrategies.Select(b => b.CurrencyPair).Distinct())
+                {
+                    exchangeMonitor.Subscribe(currencyPair, this);
+                }
             }
 
             Logger.Info("BotHandlerService has been started");
@@ -84,7 +87,10 @@ namespace CryptoBot.Bots
             // Unsubscribe from exchange monitors
             foreach (var exchangeMonitor in _exchangeMonitors)
             {
-                exchangeMonitor.Unsubscribe(this);
+                foreach (var currencyPair in _botStrategies.Select(b => b.CurrencyPair).Distinct())
+                {
+                    exchangeMonitor.Unsubscribe(currencyPair, this);
+                }
             }
 
             Logger.Info("BotHandlerService has been stopped");
